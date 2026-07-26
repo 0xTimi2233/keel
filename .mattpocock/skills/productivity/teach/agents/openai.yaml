@@ -1,0 +1,5 @@
+interface:
+  display_name: "引导教学 (Teach)"
+  short_description: "在引导式工作区中学习某个概念"
+policy:
+  allow_implicit_invocation: false

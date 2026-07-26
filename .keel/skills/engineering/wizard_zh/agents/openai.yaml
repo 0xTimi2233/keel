@@ -1,0 +1,3 @@
+interface:
+  display_name: "Wizard (中文版)"
+  description: "交互式 Bash 向导生成器。"

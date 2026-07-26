@@ -4,10 +4,10 @@
 - **Date**: YYYY-MM-DD
 
 ## Context
-决策的物理背景与痛点。
+Physical background and problem statement.
 
 ## Decision
-我们决定采用的具体方案（使用正向断言）。
+Adopted solution using affirmative assertions.
 
 ## Consequences
-该决策带来的收益与必须接受的技术妥协。
+Benefits gained and technical trade-offs accepted.

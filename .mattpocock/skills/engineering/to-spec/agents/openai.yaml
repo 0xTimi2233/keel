@@ -1,0 +1,5 @@
+interface:
+  display_name: "转化为规范"
+  short_description: "将对话转化为规范说明"
+policy:
+  allow_implicit_invocation: false

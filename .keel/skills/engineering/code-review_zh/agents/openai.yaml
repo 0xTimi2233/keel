@@ -1,0 +1,3 @@
+interface:
+  display_name: "Code Review (中文版)"
+  description: "双轴代码审查与结构化修补清单生成。"

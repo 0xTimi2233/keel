@@ -1,0 +1,5 @@
+interface:
+  display_name: "追问盘问 (Grill Me)"
+  short_description: "通过访谈追问打磨计划"
+policy:
+  allow_implicit_invocation: false

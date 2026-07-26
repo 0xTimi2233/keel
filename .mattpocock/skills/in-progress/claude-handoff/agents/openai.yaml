@@ -1,0 +1,5 @@
+interface:
+  display_name: "Claude 交接 (Claude Handoff)"
+  short_description: "交接给后台代理"
+policy:
+  allow_implicit_invocation: false

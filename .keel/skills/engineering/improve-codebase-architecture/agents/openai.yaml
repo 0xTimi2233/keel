@@ -1,3 +1,3 @@
 interface:
   display_name: "Improve Codebase Architecture"
-  description: "代码库提交热点扫描与 HTML 诊断报告生成。"
+  description: "Scans Git hotspots and shallow modules to generate HTML architecture reports."

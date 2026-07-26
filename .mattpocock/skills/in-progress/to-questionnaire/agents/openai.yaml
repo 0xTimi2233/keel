@@ -1,0 +1,5 @@
+interface:
+  display_name: "生成调查问卷 (To Questionnaire)"
+  short_description: "将问题预先整理成文档供他人回答"
+policy:
+  allow_implicit_invocation: false

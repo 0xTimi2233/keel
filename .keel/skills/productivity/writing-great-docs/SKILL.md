@@ -1,26 +1,30 @@
 ---
 name: writing-great-docs
-description: Use when creating, writing, or editing project system documentation (architecture.md, vision.md, design-system.md, etc.) to prevent context bloat and enforce single source of truth.
+description: Use when creating, writing, or shaping any persisted project documentation to ensure clear grounding, format precision, and single-source truth.
 ---
 
-# 项目系统文档编写规范
+# Universal Documentation Standards
 
-核心目标：撰写高密度、防上下文污染、单源事实的静态系统文档。
+Documentation communicates domain invariants as committed disk artifacts. The root virtue is **Predictability & Anti-Context Pollution**.
 
-规范标准详见 [DOC-STANDARDS.md](references/DOC-STANDARDS.md)。
+## 1. Grounding & Hierarchy
 
-## 1. 防上下文污染 (Progressive Disclosure)
+- **Ground Before Reaching**: Introduce a concept or term in an earlier section before a later section relies on it.
 
-- **主文档控制**：全局主文档 (`docs/architecture.md`, `docs/vision.md`) 仅保留核心约束与全景图，控制在 1-2 屏内。
-- **细节下沉**：具体子模块与实现细节下沉到子目录文件，通过 Markdown 链接按需加载。
+- **Invariants at the Top**: Keep root documents under 2 screens. State core invariants up front; offload subsystem details to linked files.
 
-## 2. 单源事实 (Single Source of Truth)
+## 2. Block Slicing & Format Choices
 
-- **零重复定义**：每个架构规则、设计 Token 或选型决策只能在一处权威文档定义。
-- **链接引用**：其他文档一律通过物理 Markdown 链接引用，禁止复制粘贴。
+- **240-Char Block Target**: Keep paragraphs and blocks under 240 characters. Split multi-job prose into concise bullet lists.
 
-## 3. 指令与剪裁 (Pruning)
+- **Prose vs List**: Use prose for narrative arguments; use bullet lists for parallel observations or criteria.
 
-- **Positive Assertions**：强制使用正向断言声明终态。
-- **No-op Test**：句级测试。删去无实质约束力的修辞套话。
-- **Leading Words**：使用行业预训练概念（如 `Hexagonal Architecture`, `Contract-First`, `Deep Module`）锚定规则。
+- **Inline vs Callout**: Reserve callouts (`> [!NOTE]`, `> [!IMPORTANT]`) for information that would genuinely derail main text inline.
+
+## 3. Single Source & Clean Overwrites
+
+- **Canonical Locations**: Define each requirement, API contract, or invariant in exactly one physical file.
+
+- **Link, Never Duplicate**: Reference canonical definitions via Markdown links (`[Title](path/file.md)`). Duplicate text creates drift.
+
+- **Clean Overwrites**: Update documentation by overwriting stale rules directly. Omit historical workaround text.

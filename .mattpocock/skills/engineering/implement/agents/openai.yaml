@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement"
+  short_description: "基于规范或工单构建工作交付"
+policy:
+  allow_implicit_invocation: false

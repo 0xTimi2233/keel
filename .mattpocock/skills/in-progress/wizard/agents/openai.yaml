@@ -1,0 +1,5 @@
+interface:
+  display_name: "导引助手 (Wizard)"
+  short_description: "生成交互式初始化设置导引脚本"
+policy:
+  allow_implicit_invocation: false

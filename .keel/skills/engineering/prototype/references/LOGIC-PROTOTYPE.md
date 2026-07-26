@@ -1,5 +1,5 @@
-# 逻辑原型规范
+# Logic Prototype Guidelines
 
-- 忽略异常处理、错误日志与边界防御。
-- 仅验证核心算法或 RPC 通信联通性。
-- 代码仅用于提供数据点，严禁直接合并进主代码库。
+- Omit error handling, logging, and edge-case guards.
+- Validate core algorithms or RPC connectivity exclusively.
+- Probe code is for data points only; prohibited from merging into main codebase.

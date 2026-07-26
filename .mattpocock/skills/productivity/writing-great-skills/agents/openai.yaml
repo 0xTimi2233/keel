@@ -1,0 +1,5 @@
+interface:
+  display_name: "编写优秀 Skill (Writing Great Skills)"
+  short_description: "构建可预测 Skill 的原则指南"
+policy:
+  allow_implicit_invocation: false

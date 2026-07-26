@@ -1,5 +1,5 @@
-# UI 原型规范
+# UI Prototype Guidelines
 
-- 使用 Vanilla CSS 或现代渐进式框架极速呈现界面。
-- 硬编码假数据，验证交互路径与视觉流向。
-- 确认设计后废弃原型代码，在正式 Feature 中按组件重新实现。
+- Render UI rapidly using Vanilla CSS or modern progressive frameworks.
+- Hardcode mock data to validate interaction paths and visual flow.
+- Discard prototype code upon design approval; re-implement modularly in formal feature.

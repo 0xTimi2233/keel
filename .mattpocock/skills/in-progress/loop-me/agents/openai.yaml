@@ -1,0 +1,5 @@
+interface:
+  display_name: "循环规范盘问 (Loop Me)"
+  short_description: "规范化你想构建的工作流"
+policy:
+  allow_implicit_invocation: false

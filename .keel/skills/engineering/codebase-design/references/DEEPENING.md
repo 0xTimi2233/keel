@@ -1,5 +1,5 @@
-# 深化模块设计 (Deepening)
+# Deepening Module Design
 
-1. **降低认知负担**：接口越简单，调用者需要的先验知识越少。
-2. **高杠杆率**：用 1 行接口代码驱动内部数百行复杂的确定性逻辑。
-3. **信息隐藏**：内部数据结构、私有辅助函数一律不可见（`pub(crate)` 或私有）。
+1. **Reduce Cognitive Burden**: Simple interfaces minimize required caller prior knowledge.
+2. **High Leverage**: One line of interface code drives internal complex deterministic logic.
+3. **Information Hiding**: Keep internal data structures and private helpers invisible (`pub(crate)` or private).

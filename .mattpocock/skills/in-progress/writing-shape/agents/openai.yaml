@@ -1,0 +1,5 @@
+interface:
+  display_name: "文章塑造 (Writing Shape)"
+  short_description: "将原始素材塑造为文章"
+policy:
+  allow_implicit_invocation: false

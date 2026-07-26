@@ -1,0 +1,5 @@
+interface:
+  display_name: "Grill with Docs"
+  short_description: "对设计进行追问探究并编写相关文档"
+policy:
+  allow_implicit_invocation: false

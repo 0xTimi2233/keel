@@ -3,15 +3,15 @@ name: grilling
 description: Use when needing to interview the user relentlessly about a design, plan, or requirement, one question at a time, until shared understanding is reached.
 ---
 
-# 盘问原语 (Grilling Primitive)
+# Grilling Primitive
 
-核心目标：消除需求歧义，顺着决策树依赖链推演，达成 **Shared Understanding（共识）**。
+Root objective: Resolve requirement ambiguities along the decision tree to reach **Shared Understanding**.
 
-## 执行准则
+## Directives
 
-- **One Question at a Time**：严格限制每次只抛出 1 个问题，禁止多问并列导致认知过载。
-- **Recommended Answer**：每个问题必须提供专业分析并给出推荐选项，格式前缀 `(推荐) 选项内容`。
-- **Facts vs Decisions 分离**：
-  - **Facts（事实）**：能够通过查看代码库、运行命令探查到的信息，Agent 必须自动去查，禁止询问用户。
-  - **Decisions（决策）**：涉及业务偏好、架构取舍与范围剪裁的选择，向用户提问。
-- **Confirmation Gate**：未获得用户明确确认共识前，程序化禁止编写任何业务实现代码。
+- **One Question at a Time**: Limit output to 1 question per turn to prevent cognitive overload.
+- **Recommended Answer**: Provide expert analysis and prefix recommended options with `(Recommended)`.
+- **Facts vs Decisions**:
+  - **Facts**: Explore repo/environment automatically; never ask the user facts discoverable by code/commands.
+  - **Decisions**: Interview user on business preference, architecture trade-offs, and scope boundaries.
+- **Confirmation Gate**: Programmatically prohibit writing feature implementation code until explicit user confirmation of shared understanding.

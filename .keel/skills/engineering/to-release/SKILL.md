@@ -1,19 +1,19 @@
 ---
 name: to-release
-description: 自动化版本发布管理。汇总已完成的 Parent Issues，计算 SemVer 版本号，更新 CHANGELOG.md 并创建 GitHub Release。
+description: Automated release management. Aggregates merged Parent Issues, calculates SemVer, updates CHANGELOG.md, and creates GitHub Release.
 disable-model-invocation: true
 ---
 
-# 版本发布管理 (To Release)
+# Automated Release Management (To Release)
 
-用户手动输入 `/to-release` 触发。
+Triggered via explicit `/to-release`.
 
-## 执行流程
+## Directives
 
-1. **汇总合并内容**：检索自上一 Tag 以来已合并入 `main` 的 Parent Issues 与提交。
-2. **计算 SemVer**：
+1. **Aggregate Merged Items**: Retrieve merged Parent Issues and commits since previous Git Tag.
+2. **Calculate SemVer**:
    - Breaking changes -> Major
    - New features (Specs) -> Minor
    - Bug fixes -> Patch
-3. **生成 Changelog**：参考 [RELEASE-TEMPLATE.md](assets/RELEASE-TEMPLATE.md) 格式更新 `CHANGELOG.md`。
-4. **GitHub Release**：打上 Git Tag，调用 `gh release create <tag>` 创建官方 Release。
+3. **Generate Changelog**: Update `CHANGELOG.md` per [RELEASE-TEMPLATE.md](assets/RELEASE-TEMPLATE.md).
+4. **Publish GitHub Release**: Commit Changelog, tag Git commit, and execute `gh release create <tag>`.

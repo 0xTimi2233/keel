@@ -1,0 +1,5 @@
+interface:
+  display_name: "分批追问盘问 (Batch Grill Me)"
+  short_description: "按轮次打磨计划"
+policy:
+  allow_implicit_invocation: false

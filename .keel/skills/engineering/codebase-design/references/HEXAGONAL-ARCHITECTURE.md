@@ -1,24 +1,24 @@
-# AI 友好型架构规范：契约优先 + DDD + 六边形 + 垂直切片
+# Hexagonal Architecture Specification
 
-## 物理目录结构 (Rust 2024 Idiom)
+## Directory Layout (Rust 2021 Idiom)
 
 ```text
 crates/
 └── <domain>/
     ├── CONTEXT.md
     └── src/
-        ├── domain/           <-- 纯业务实体 (零 IO 依赖)
-        ├── ports/            <-- 出向端口 (pub trait)
-        ├── adapters/         <-- 适配器实现 (impl Trait for Struct)
-        └── features/         <-- 垂直切片 (无 mod.rs, 采用 feature.rs + feature/)
+        ├── domain/           <-- Domain entities (Zero IO dependencies)
+        ├── ports/            <-- Outbound ports (pub trait)
+        ├── adapters/         <-- Adapters (impl Trait for Struct)
+        └── features/         <-- Vertical Slices (No mod.rs, uses feature.rs + feature/)
             ├── place_hold.rs
             └── place_hold/
                 ├── command.rs
                 ├── handler.rs
                 ├── validator.rs
                 ├── response.rs
-                └── tests.rs  <-- #[cfg(test)] 白盒测试
+                └── tests.rs  <-- #[cfg(test)] Whitebox unit tests
 ```
 
-## 测试替身 (Fakes)
-每个领域必须在 `*-test-support` Crate 中提供官方内存 Fake 实现，供子工单快环测试毫秒级运行。
+## Test Doubles (Fakes)
+Every domain must provide an official in-memory Fake implementation in `*-test-support` Crate for millisecond fast-loop testing.

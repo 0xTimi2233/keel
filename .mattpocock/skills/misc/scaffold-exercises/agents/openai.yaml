@@ -1,0 +1,3 @@
+interface:
+  display_name: "练习脚手架 (Scaffold Exercises)"
+  short_description: "脚手架搭建符合 lint 规范的课程练习"

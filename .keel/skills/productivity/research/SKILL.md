@@ -3,15 +3,15 @@ name: research
 description: Use when the agent needs to research primary sources (specs, code, RFCs, official docs) in depth without polluting the main conversation thread.
 ---
 
-# 后台资料调研原语
+# Research Primitive
 
-当需要查明技术细节、官方 API 行为或代码库历史时触发。
+Triggered when investigating technical specifics, official API behavior, or codebase history.
 
-## 执行流程
+## Directives
 
-1. **Primary Sources Only**：只阅读官方文档、源码文件与标准 RFC，禁止根据推测给出结论。
-2. **Subagent 隔离探查**：派发独立子 Agent 执行，不占用主会话上下文。
-3. **生成带引用的报告**：
-   在 `research/<topic>.md` 写入报告，包含：
-   - 研判结论。
-   - 源码物理路径与行号 / 官方文档 URL 引用。
+1. **Primary Sources Only**: Read official docs, source code, and RFC specs exclusively; prohibit speculative conclusions.
+2. **Isolated Subagent Execution**: Dispatch background subagent to execute without main thread context bloat.
+3. **Generate Cited Report**:
+   Write Markdown report to `research/<topic>.md`, containing:
+   - Definite findings & analysis.
+   - Exact source file physical paths, line numbers, or official doc URLs.

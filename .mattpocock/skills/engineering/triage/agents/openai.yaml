@@ -1,0 +1,5 @@
+interface:
+  display_name: "Issue 分类"
+  short_description: "驱动 issue 经过分类角色"
+policy:
+  allow_implicit_invocation: false

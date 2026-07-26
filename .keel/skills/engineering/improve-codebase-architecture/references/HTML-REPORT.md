@@ -1,6 +1,6 @@
-# HTML 架构诊断报告结构
+# HTML Architecture Report Structure
 
-报告模板必须包含：
-1. **Tailwind CSS CDN 样式**：优雅暗黑主题与现代 Typography。
-2. **Mermaid.js CDN 图表**：绘制代码库热点耦合图与建议的六边形模块重构图。
-3. **Hotspot Ranking Table**：列出 Top 10 修改频繁文件及重构优先度建议。
+Report must contain:
+1. **Tailwind CSS CDN**: Modern typography and dark theme styling.
+2. **Mermaid.js CDN**: Render hotspot coupling graphs and suggested hexagonal module refactoring diagrams.
+3. **Hotspot Ranking Table**: List Top 10 modified files with refactoring priority recommendations.

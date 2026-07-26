@@ -1,20 +1,20 @@
 ---
 name: triage
-description: 外部 Issue 与 PR 的分诊状态机。评估、查重、验证复现、补齐细节并标记状态。
+description: Issue and PR triage state machine. Evaluates, verifies reproduction, checks out-of-scope history, and tags state.
 disable-model-invocation: true
 ---
 
-# 问题与 PR 分诊 (Triage)
+# Issue & PR Triage State Machine
 
-用户手动输入 `/triage` 触发。专门处理外部/测试人员提交的原始 Issue/PR。
+Triggered via explicit `/triage`. Processes external/reporter submitted Issues/PRs.
 
-## 状态机角色
+## State Machine Roles
 
 - **Category**: `bug` | `enhancement`
 - **State**: `needs-triage` | `needs-info` | `ready-for-agent` | `ready-for-human` | `wontfix`
 
-## 执行流程
+## Directives
 
-1. **查重与查边界**：检索代码库看是否已实现；比对 [OUT-OF-SCOPE.md](references/OUT-OF-SCOPE.md) 中的拒绝历史。若已实现或拒绝，标记 `wontfix` 关闭。
-2. **验证复现**：针对 Bug 尝试复现，记录复现路径。
-3. **撰写 Brief**：遵循 [AGENT-BRIEF.md](references/AGENT-BRIEF.md) 撰写 Brief 并标注 `ready-for-agent`。
+1. **Check Duplication & Scope**: Search codebase for existing implementations; compare against rejection history in [OUT-OF-SCOPE.md](references/OUT-OF-SCOPE.md). Mark `wontfix` if duplicate or rejected.
+2. **Verify Claims**: Reproduce bug claims; document reproduction path.
+3. **Draft Brief & Tag**: Write Agent Brief per [AGENT-BRIEF.md](references/AGENT-BRIEF.md) and tag `ready-for-agent`.

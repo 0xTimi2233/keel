@@ -1,19 +1,19 @@
 ---
 name: batch-grill-me
-description: 按轮次分批提问的盘问入口。计算拓扑前沿并集中提问。
+description: Round-by-round batch grilling entrance. Calculates topological frontier decisions and prompts in batches.
 disable-model-invocation: true
 ---
 
-# 按轮次批量盘问入口
+# Batch Grill Me
 
-用户手动输入 `/batch-grill-me` 触发。
+Triggered via explicit `/batch-grill-me`.
 
-## 执行流程
+## Directives
 
-1. **构建决策树**：梳理方案的所有决策节点与依赖关系。
-2. **计算 Frontier（拓扑前沿）**：找出当前所有前置条件已满足、可直接回答的问题集合。
-3. **Round-by-Round 提问**：
-   - 集中列出当前轮次的前沿问题，每个问题前缀 `(推荐) 选项内容`。
-   - 等待用户集中回答。
-4. **迭代推进**：根据回答更新决策树，重新计算下一轮 Frontier，直至决策清零。
-5. **Confirmation Gate**：获得用户确认后结束。
+1. **Build Decision Tree**: Map all plan decision nodes and dependencies.
+2. **Calculate Frontier**: Isolate current unblocked decision nodes whose prerequisites are satisfied.
+3. **Round-by-Round Interview**:
+   - List current round frontier questions; prefix options with `(Recommended)`.
+   - Await user batch responses.
+4. **Iterative Progression**: Update decision tree, recalculate next frontier, repeat until cleared.
+5. **Confirmation Gate**: Conclude upon explicit user confirmation.

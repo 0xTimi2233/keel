@@ -1,0 +1,3 @@
+interface:
+  display_name: "Triage (中文版)"
+  description: "Issue 与 PR 分诊状态机。"

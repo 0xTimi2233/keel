@@ -1,15 +1,15 @@
-# 问题追踪器配置规范
+# Issue Tracker Configuration
 
-## 1. 必需标签集合
+## 1. Canonical Label Set
 
-- `bug` — 缺陷或故障
-- `enhancement` — 新需求或改进
-- `needs-triage` — 待分诊评估
-- `needs-info` — 缺少信息，等待提交者补充
-- `ready-for-agent` — 规格完备，可供 Agent 独立施工
-- `ready-for-human` — 涉及主观决策，需人类介入
-- `wontfix` — 拒绝/重复/超出范围
+- `bug` — Defect or failure
+- `enhancement` — Feature request or improvement
+- `needs-triage` — Evaluation in progress
+- `needs-info` — Missing info, awaiting reporter response
+- `ready-for-agent` — Fully specified, ready for AFK agent execution
+- `ready-for-human` — Requires human judgment/implementation
+- `wontfix` — Rejected, duplicate, or out of scope
 
-## 2. CI 关联
+## 2. CI Integration
 
-- 所有带 `ready-for-agent` 标签的 Sub-issue，在其分支合并进集线分支时触发 Fast Loop CI。
+- All Sub-issues tagged `ready-for-agent` trigger Fast Loop CI upon branch PR submission.

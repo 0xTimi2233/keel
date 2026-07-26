@@ -1,8 +1,5 @@
-# 垂直切片拆分铁律
+# Vertical Slice Rules
 
-1. **原子可验证性 (Atomic Completeness)**：
-   切片的物理下限是必须在当前 Ticket 结束时做到“编译通过、CI 绿灯、CR 可过”。绝不能把一个原子改动（如关联的 1 到 4 个字段）切碎导致代码报红。
-2. **独立可被 Demo/测试**：
-   切片完成后，必须能够被集成测试或 BDD 验收测试单独执行。
-3. **避免过早上下文压缩**：
-   切片体积应刚好容纳在单次干净会话内独立完成。
+1. **Atomic Completeness**: Slice physical lower bound must be compilable, CI green, and CR passable upon ticket completion. Prohibit splitting atomic changes that break compilation.
+2. **Independently Demoable & Verifiable**: Completed slice must be independently executable by integration or BDD tests.
+3. **Avoid Premature Compression**: Slice size should fit cleanly within a single fresh session context.

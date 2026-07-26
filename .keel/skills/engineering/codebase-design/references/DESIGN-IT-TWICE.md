@@ -1,7 +1,7 @@
-# 两次设计原则 (Design It Twice)
+# Design It Twice Principle
 
-对于重要的接口或设计，至少提出两种截然不同的方案：
-1. 方案 A：倾向于极致性能与扩展性；
-2. 方案 B：倾向于极致简单与开发吞吐量；
+Propose two distinct designs for major interfaces or technical selections:
+1. **Option A**: Optimized for extreme performance and scalability.
+2. **Option B**: Optimized for extreme simplicity and development throughput.
 
-对比两者的复杂度与接缝风险，选择综合杠杆率最高者。
+Compare complexity and seam risks; select the design yielding highest overall leverage.

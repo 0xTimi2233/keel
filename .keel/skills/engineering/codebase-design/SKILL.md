@@ -1,15 +1,15 @@
 ---
 name: codebase-design
-description: 代码库架构设计原则：契约优先、DDD 限界上下文、六边形 Ports & Adapters、垂直切片与深模块设计。
+description: Codebase architecture design guidelines: Contract-First, Hexagonal Ports & Adapters, Vertical Slices, and Deep Modules.
 disable-model-invocation: true
 ---
 
-# 代码库架构设计指南
+# Codebase Architecture Design
 
-用户手动输入 `/codebase-design` 触发。
+Triggered via explicit `/codebase-design`.
 
-## 核心法则
+## Directives
 
-- **Deep Modules**：遵循 [DEEPENING.md](references/DEEPENING.md)，提供小而稳定的公开接口，隐藏内部复杂度。
-- **Design It Twice**：遵循 [DESIGN-IT-TWICE.md](references/DESIGN-IT-TWICE.md)，针对重大选型对比两种方案。
-- **Hexagonal Architecture**：严格执行 [HEXAGONAL-ARCHITECTURE.md](references/HEXAGONAL-ARCHITECTURE.md) 中的物理目录布局、Traits 端口、Adapters 适配器以及 `-test-support` Fakes 规则。
+- **Deep Modules**: Follow [DEEPENING.md](references/DEEPENING.md); expose small stable interfaces, hide implementation complexity.
+- **Design It Twice**: Follow [DESIGN-IT-TWICE.md](references/DESIGN-IT-TWICE.md); evaluate two distinct designs for major selections.
+- **Hexagonal Architecture**: Enforce directory layout, Traits ports, Adapters implementations, and `-test-support` Fakes defined in [HEXAGONAL-ARCHITECTURE.md](references/HEXAGONAL-ARCHITECTURE.md).

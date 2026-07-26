@@ -1,0 +1,3 @@
+interface:
+  display_name: "迁移到 Shoehorn (Migrate to Shoehorn)"
+  short_description: "使用 shoehorn 替换测试中的类型断言"

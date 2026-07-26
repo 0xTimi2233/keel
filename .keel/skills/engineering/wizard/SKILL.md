@@ -3,12 +3,12 @@ name: wizard
 description: Use when needing to generate a human-friendly interactive bash wizard for setting up environment variables or secrets.
 ---
 
-# 交互式向导生成器
+# Interactive Wizard Generator
 
-当需要人类配置环境变量、秘钥或依赖工具链时触发。
+Triggered when human environment setup or secret configuration is required.
 
-## 执行流程
+## Directives
 
-1. **确定缺失配置**。
-2. **生成单文件 Bash 脚本**：在 `.scratch/wizards/` 写入轻量交互脚本，采用 `read -p` 和防错条件判断。
-3. **提示用户执行**：输出单行运行指令，由人类手动运行。
+1. **Identify Missing Config**: Isolate required environment variables or tooling dependencies.
+2. **Generate Bash Script**: Write single-file interactive script in `.scratch/wizards/` using `read -p` and error-handling conditions.
+3. **Prompt Execution**: Output single-line terminal command for human execution.

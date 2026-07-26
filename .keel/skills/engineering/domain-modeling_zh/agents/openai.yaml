@@ -1,0 +1,3 @@
+interface:
+  display_name: "Domain Modeling (中文版)"
+  description: "领域建模与 CONTEXT.md / ADR 维护。"

@@ -3,14 +3,14 @@ name: implement
 description: Use when driven to code and test a single vertical slice (Sub-issue) following TDD cycle with Fakes.
 ---
 
-# 垂直切片 TDD 实现
+# Vertical Slice TDD Implementation
 
-当 Agent 抓取单个带有 `ready-for-agent` 的 Sub-issue 时触发。
+Triggered when an agent picks up a Sub-issue tagged `ready-for-agent`.
 
-## 执行流程
+## Directives
 
-1. **读取上下文**：读取 Sub-issue 描述与对应的 `.feature` BDD 文件。
-2. **Step Definitions (Red)**：实现测试断言，注入 `*-test-support` Fakes 适配器，确认测试报红 (Red)。
-3. **实现代码**：在 `src/features/<feature>/` 下编写 `command.rs`, `handler.rs`, `validator.rs` 等。
-4. **验证绿灯 (Green)**：运行 `cargo test --package <crate>`，验证测试 100% 通过 (Green)。
-5. **提交 PR**：提交 Commit 发起目标为 `feature/issue-<parent_id>` 的 PR，开启 `auto-merge`。
+1. **Read Context**: Read Sub-issue description and corresponding `.feature` BDD file.
+2. **Step Definitions (Red)**: Implement test assertions, inject `*-test-support` Fakes adapter, verify test fails (Red).
+3. **Feature Code**: Write `command.rs`, `handler.rs`, `validator.rs` in `src/features/<feature>/`.
+4. **Verify Green**: Run `cargo test --package <crate>`, verify tests pass 100% (Green).
+5. **Submit PR**: Commit and submit PR targeting `feature/issue-<parent_id>` with `auto-merge` enabled.

@@ -1,16 +1,16 @@
 ---
 name: to-tickets
-description: 将 Parent Spec 或对话切分为零依赖的垂直切片 Sub-issues，并批量发布到 GitHub 追踪器。
+description: Breaks Parent Spec or conversation into tracer-bullet vertical slice Sub-issues and publishes to GitHub.
 disable-model-invocation: true
 ---
 
-# 垂直切片拆单 (To Tickets)
+# Vertical Slice Slicing (To Tickets)
 
-用户手动输入 `/to-tickets [#PARENT_ID]` 触发。
+Triggered via explicit `/to-tickets [#PARENT_ID]`.
 
-## 拆单准则
+## Directives
 
-- **Tracer Bullet**：切片必须贯穿 Schema -> API -> Logic -> Test 全栈。遵循 [VERTICAL-SLICE-RULES.md](references/VERTICAL-SLICE-RULES.md) 的原子可验证性定理（Atomic Completeness）。
-- **Wide Refactors**：遇到破坏性重构，遵循 [WIDE-REFACTORS.md](references/WIDE-REFACTORS.md) 规定的 Expand-Contract 三步拆分法。
-- **Zero Blockers**：利用提前锁定的 Traits 契约与 Fakes，保持切片零依赖阻碍，支持平行施工。
-- **发布挂载**：按 [ISSUE-TEMPLATE.md](assets/ISSUE-TEMPLATE.md) 格式拟定子工单，经用户确认后，调用 `gh issue create` 原生挂载为 Parent Sub-issues，标注 `ready-for-agent`。
+- **Tracer Bullet**: Each slice must cut end-to-end through Schema -> API -> Logic -> Test. Adhere to atomic completeness in [VERTICAL-SLICE-RULES.md](references/VERTICAL-SLICE-RULES.md).
+- **Wide Refactors**: Sequence breaking refactors using Expand-Contract 3-step method in [WIDE-REFACTORS.md](references/WIDE-REFACTORS.md).
+- **Zero Blockers**: Leverage pre-locked Trait contracts and Fakes to keep slices unblocked for parallel execution.
+- **Publish Sub-issues**: Draft tickets per [ISSUE-TEMPLATE.md](assets/ISSUE-TEMPLATE.md); upon user approval, execute `gh issue create` to link natively as Parent Sub-issues with `ready-for-agent` label.

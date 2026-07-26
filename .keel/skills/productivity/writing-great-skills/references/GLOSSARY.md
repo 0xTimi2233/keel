@@ -1,96 +1,96 @@
-# 术语表 (Glossary)
+# Glossary
 
-## 一、 核心美德
+## Root Virtue
 
-### Predictability (可预测性)
-Agent 每次运行采取相同物理执行过程。根美德。
+### Predictability
+Degree to which a skill makes the agent adopt the same execution process on every run. Root virtue; cost and maintainability are symptoms.
 - *Avoid*: consistency, reliability, output-determinism
 
-## 二、 物理调用轴 (Invocation)
+## Invocation
 
-### Model-Invoked (模型调用)
-保留 `description`。Agent 自主触发与嵌套调用。付出 **Context Load**。
+### Model-Invoked
+Keeps `description`. Autonomous agent discovery & nested invocation. Pays Context Load.
 
-### User-Invoked (用户调用)
-声明 `disable-model-invocation: true`。对 Agent 物理隐形，仅终端触发。**零 Context Load**，付出 **Cognitive Load**。
+### User-Invoked
+Sets `disable-model-invocation: true`. Invisible to agent. Zero Context Load, pays Cognitive Load.
 
-### Description (描述)
-模型调用的机器可读触发器。常驻 **Context Pointer**。删去即转为 User-Invoked。
+### Description
+Machine-readable trigger. Permanent Context Pointer for model-invoked skills. Deleting it converts skill to user-invoked.
 
-### Context Pointer (上下文指针)
-常驻上下文的物理引用（如 Markdown 链接）。决定资料加载时机与可靠性。
+### Context Pointer
+Reference in agent context pointing to out-of-context material. Wording decides loading timing and reliability.
 
-### Context Load (上下文负载)
-模型调用 `description` 逐轮占用上下文的 Token 与注意力物理开销。
+### Context Load
+Permanent context window token and attention cost imposed by a model-invoked skill's description.
 
-### Cognitive Load (认知负载)
-人类记住技能存在与触发时机的记忆负担。
+### Cognitive Load
+Memory burden on the human to remember available user-invoked skills.
 
-### Router Skill (路由器技能)
-索引其他 User-Invoked 技能的入口技能。降低 Cognitive Load。
+### Router Skill
+User-invoked skill indexing other user-invoked skills to reduce Cognitive Load.
 
-### Granularity (粒度)
-技能拆分细度。**By Invocation** 按引导词切分；**By Sequence** 隐去后置步骤防止 Premature Completion。
+### Granularity
+Fine-ness of skill division. Split **By Invocation** for distinct leading words; split **By Sequence** to hide post-completion steps.
 
-## 三、 信息层级轴 (Information Hierarchy)
+## Information Hierarchy
 
-### Information Hierarchy (信息层级)
-按紧迫程度排列的内容梯子：Steps > In-skill Reference > External Reference。
+### Information Hierarchy
+Content ladder ranked by immediacy of need: Steps > In-skill Reference > External Reference.
 
-### Steps (步骤)
-`SKILL.md` 中有序动作。绑定二元物理 **Completion Criterion**。
+### Steps
+Ordered actions in `SKILL.md`. Every step binds a checkable Completion Criterion.
 
-### Reference (参考)
-按需查阅的定义与规则。**Progressive Disclosure** 的主要下沉对象。
+### Reference
+Material referred to on demand. Primary candidate for Progressive Disclosure.
 
-### External Reference (外部参考)
-技能系统之外的静态文件，无 `description`，不可独立调用。
+### External Reference
+Static file outside skill system without description. Not invocable on its own.
 
-### Progressive Disclosure (渐进式暴露)
-参考资料下沉至同目录链接 Markdown 文件。保持主文档清晰。
+### Progressive Disclosure
+Moving reference out of `SKILL.md` into linked Markdown files to keep top ladder legible.
 
-### Co-location (同地协作)
-相关资料集中置于同一标题下（定义、规则、边界）。
+### Co-location
+Grouping related definitions, rules, and caveats under a single heading.
 
-### Sprawl (膨胀)
-*失败模式*。技能体积仅因物理字数过长而损坏可读性。解法：信息层级下沉。
+### Sprawl
+*Failure mode.* Oversized skill length damaging readability and attention. Fix: push reference down.
 
-## 四、 运行时控制轴 (Steering)
+## Steering
 
-### Branch (分支)
-技能调用的独立路径分支。
+### Branch
+Distinct execution path through a skill.
 
-### Leading Word (引导词)
-预训练权重已存在的精炼概念（如 `tight`, `red`, `tracer bullet`）。单词唤醒先验知识，锚定物理行为。
+### Leading Word
+Pretrained concept token (`tight`, `red`, `tracer bullet`). Recruits priors to anchor behavior in minimal tokens.
 
-### Completion Criterion (完成标准)
-告知 Agent 工作完成的二元物理条件。必须 **Checkable** 与 **Exhaustive**。
+### Completion Criterion
+Checkable and exhaustive binary condition marking step completion. Resists Premature Completion.
 
-### Legwork (腿部工作量)
-Agent 单步内探查代码库、查阅文件的主动工作量。
+### Legwork
+Unprompted agent work (repo exploration, file reading) within a single step.
 
-### Post-Completion Steps (后置步骤)
-当前步骤之后的后续步骤。露在上下文中诱导 Premature Completion。
+### Post-Completion Steps
+Steps following current step. Pulls agent forward into Premature Completion.
 
-### Premature Completion (过早完成)
-*失败模式*。在步骤未完成前注意力滑向结束。防御：硬化 Completion Criterion 或隐藏后置步骤。
+### Premature Completion
+*Failure mode.* Quitting a step before genuine completion due to attention slipping forward.
 
-### Negation (否定诱导)
-*失败模式*。禁止句（“不要思考大象”）反向激活被禁行为。解法：使用 **Positive Assertions** 规定目标行为。
+### Negation
+*Failure mode.* Prohibitive steering ("don't think of an elephant") backfiring by activating banned behavior. Fix: Positive Assertions.
 
-## 五、 剪裁纪律轴 (Pruning)
+## Pruning
 
-### Single Source of Truth (单源事实)
-规则与含义有且仅有唯一的权威物理出处。
+### Single Source of Truth
+Each rule lives in exactly one authoritative location.
 
-### Duplication (重复)
-*失败模式*。同一含义存在多个出处。
+### Duplication
+*Failure mode.* Same meaning repeated in multiple places.
 
-### Relevance (相关性)
-每一行是否依然约束 Agent 行为。
+### Relevance
+Whether a line actively bears on agent execution.
 
-### Sediment (沉淀)
-*失败模式*。废弃旧规则因不敢删除而积聚沉淀。
+### Sediment
+*Failure mode.* Stale rules accumulated over time without pruning.
 
-### No-Op (无用语句)
-*失败模式*。模型默认已遵循的句子。句级测试：删去不改变 Agent 默认行为即擦除。
+### No-Op
+*Failure mode.* Instruction stating default behavior. Sentence-level test: delete if behavior is unchanged.

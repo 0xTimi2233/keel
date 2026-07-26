@@ -1,3 +1,3 @@
 interface:
   display_name: "Codebase Design"
-  description: "代码库架构设计原则与六边形规范。"
+  description: "Architectural guidelines for Hexagonal Architecture, Deep Modules, and Vertical Slicing."
