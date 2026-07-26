@@ -1,0 +1,3 @@
+interface:
+  display_name: "Setup"
+  description: "初始化项目 Agent 基础设施与架构宪法。"

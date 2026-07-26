@@ -1,0 +1,3 @@
+interface:
+  display_name: "Handoff"
+  description: "上下文压缩与跨 Session 传递工具。"

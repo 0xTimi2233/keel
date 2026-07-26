@@ -1,0 +1,3 @@
+interface:
+  display_name: "Implement"
+  description: "驱动单个垂直切片的 TDD 实现与快环闭环。"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "To Release"
+  description: "计算 SemVer、更新 CHANGELOG 与发布 GitHub Release。"
