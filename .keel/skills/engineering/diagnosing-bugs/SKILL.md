@@ -1,17 +1,14 @@
 ---
 name: diagnosing-bugs
-description: 疑难 Bug 深入诊断与根因隔离。基于完整未截断日志分析，禁止掩盖症状与表面修复。
+description: Use when encountering broken tests, crashes, or unhandled errors to isolate root cause without patching symptoms.
 ---
 
 # 疑难 Bug 诊断
 
-在遇到测试报错、运行时崩溃或异常行为时触发。
+在遇到测试报错、崩溃或异常行为时触发。
 
-## 硬性诊断准则
+## 诊断准则
 
-1. **读取完整未截断日志**：
-   在提出任何假说前，必须获取并阅读完整的错误日志与堆栈跟踪。
-2. **根因隔离（Root-Cause Isolation）**：
-   追踪数据上游提供者，禁止通过掩盖症状（如静默 try/catch、返回假默认值）修 Bug。
-3. **编写最小复现测试**：
-   在修复前先写一个能准确复现报错的单测（Red），修复后验证其变绿（Green）。
+- **未截断日志分析**：在提出假说前，必须获取并阅读完整未截断的错误日志与堆栈。
+- **Root-Cause Isolation**：追踪数据上游，禁止通过静默 try/catch 或伪造默认值做表面修复。
+- **最小复现测试**：先写出精准复现报错的测试 (Red)，修复后验证变绿 (Green)。

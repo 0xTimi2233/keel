@@ -10,12 +10,7 @@ disable-model-invocation: true
 
 ## 拆单准则
 
-1. **垂直切片（Tracer Bullet）**：
-   每个 Ticket 必须贯穿 Schema -> API -> Logic -> Test 全栈，可被独立验证。
-   详细法则见 [VERTICAL-SLICE-RULES.md](references/VERTICAL-SLICE-RULES.md)。
-2. **大重构拆分**：
-   遇到破坏性公共重构，遵循 [WIDE-REFACTORS.md](references/WIDE-REFACTORS.md) 规定的 Expand-Contract 三步拆分法。
-3. **零依赖平行化（Zero Blockers）**：
-   利用提前锁定的 Traits 契约与测试替身（Fakes），使各切片尽可能保持零依赖阻碍，支持平行施工。
-4. **确认与发布**：
-   按照 [ISSUE-TEMPLATE.md](assets/ISSUE-TEMPLATE.md) 格式在内存中拟定子工单，展示给用户确认后，调用 `gh issue create` 原生挂载为 Parent 的 Sub-issues，打上 `ready-for-agent` 标签。
+- **Tracer Bullet**：切片必须贯穿 Schema -> API -> Logic -> Test 全栈。遵循 [VERTICAL-SLICE-RULES.md](references/VERTICAL-SLICE-RULES.md) 的原子可验证性定理（Atomic Completeness）。
+- **Wide Refactors**：遇到破坏性重构，遵循 [WIDE-REFACTORS.md](references/WIDE-REFACTORS.md) 规定的 Expand-Contract 三步拆分法。
+- **Zero Blockers**：利用提前锁定的 Traits 契约与 Fakes，保持切片零依赖阻碍，支持平行施工。
+- **发布挂载**：按 [ISSUE-TEMPLATE.md](assets/ISSUE-TEMPLATE.md) 格式拟定子工单，经用户确认后，调用 `gh issue create` 原生挂载为 Parent Sub-issues，标注 `ready-for-agent`。

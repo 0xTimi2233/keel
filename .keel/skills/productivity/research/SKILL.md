@@ -1,17 +1,17 @@
 ---
 name: research
-description: 派发后台 Agent 深入阅读第一手资料（官方文档、源码、规格说明、RPC 契约），输出单篇带引用的 Markdown 报告。
+description: Use when the agent needs to research primary sources (specs, code, RFCs, official docs) in depth without polluting the main conversation thread.
 ---
 
 # 后台资料调研原语
 
-当需要查明某个技术细节、官方 API 行为或代码库历史时触发。
+当需要查明技术细节、官方 API 行为或代码库历史时触发。
 
 ## 执行流程
 
-1. **锁定第一手资料（Primary Sources）**：只阅读官方文档、源码文件、标准 RFC 规范，禁止根据推测给出结论。
-2. **后台 Agent 独立执行**：派发独立子 Agent 进行探查，不阻塞主会话推进。
+1. **Primary Sources Only**：只阅读官方文档、源码文件与标准 RFC，禁止根据推测给出结论。
+2. **Subagent 隔离探查**：派发独立子 Agent 执行，不占用主会话上下文。
 3. **生成带引用的报告**：
-   将结果写入 `research/<topic>.md` 或指定分支，报告必须包含：
-   - 明确结论与研判。
-   - 源码文件物理路径与行号索引 / 官方文档 URL 引用。
+   在 `research/<topic>.md` 写入报告，包含：
+   - 研判结论。
+   - 源码物理路径与行号 / 官方文档 URL 引用。

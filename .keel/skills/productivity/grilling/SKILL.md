@@ -1,20 +1,17 @@
 ---
 name: grilling
-description: 针对方案、设计或想法进行高强度深度盘问的原语。当任务意图模糊或需要消除决策歧义时触发。
+description: Use when needing to interview the user relentlessly about a design, plan, or requirement, one question at a time, until shared understanding is reached.
 ---
 
 # 盘问原语 (Grilling Primitive)
 
-对用户提出的方案进行逐级深度追问，顺着决策树依赖链推演，消除所有潜在盲点与模糊分支。
+核心目标：消除需求歧义，顺着决策树依赖链推演，达成 **Shared Understanding（共识）**。
 
 ## 执行准则
 
-1. **一次只问一个问题（One question at a time）**：
-   严格限制每次只抛出一个问题。禁止一次性列出多个问题造成认知过载。
-2. **附带推荐答案（Recommended Answer）**：
-   每个问题必须给出 Agent 的专业分析与推荐选项，格式为“（推荐）选项内容”，让用户快速决策。
-3. **事实与决策分离（Facts vs Decisions）**：
-   - 事实（Fact）：能通过查看代码库、运行命令或检索环境解决的问题，Agent 必须自己去查，禁止询问用户。
-   - 决策（Decision）：涉及业务偏好、架构取舍、范围裁剪的决定，向用户提问。
-4. **确认门禁（Confirmation Gate）**：
-   在获得用户明确确认“双方已达成共识（Shared Understanding）”之前，程序化禁止编写任何业务实现代码。
+- **One Question at a Time**：严格限制每次只抛出 1 个问题，禁止多问并列导致认知过载。
+- **Recommended Answer**：每个问题必须提供专业分析并给出推荐选项，格式前缀 `(推荐) 选项内容`。
+- **Facts vs Decisions 分离**：
+  - **Facts（事实）**：能够通过查看代码库、运行命令探查到的信息，Agent 必须自动去查，禁止询问用户。
+  - **Decisions（决策）**：涉及业务偏好、架构取舍与范围剪裁的选择，向用户提问。
+- **Confirmation Gate**：未获得用户明确确认共识前，程序化禁止编写任何业务实现代码。

@@ -1,38 +1,48 @@
 ---
 name: writing-great-skills
-description: 编写与编辑高确定性 AI Skill 的词汇、原则与结构规范。
-disable-model-invocation: true
+description: Use when creating, editing, or refactoring an AI Skill file (SKILL.md). Enforces high-determinism, leading-word assertions, and zero-fluff pruning.
 ---
 
-# 编写高品质 Skill 规范
+# Skill 编写规范
 
-Skill 的本质是从随机 LLM 系统中提取确定性。可预测性（Agent 每次运行采用相同流程）是最高原则。
+核心目标：**Predictability（过程确定性）**。约束 Agent 在每次运行中执行相同的流程。
 
-阅读核心术语定义：[GLOSSARY.md](references/GLOSSARY.md)。
+术语定义详见 [GLOSSARY.md](references/GLOSSARY.md)。
 
-## 物理调用分类
+## 1. 物理调用配置 (Invocation)
 
-- **模型调用（Model-invoked）**：保留 `description`，Agent 可自主触发，其他 Skill 可嵌套调用。增加 Context Load。
-- **用户调用（User-invoked）**：在 frontmatter 中声明 `disable-model-invocation: true`，剥离模型视角描述，仅允许人类在终端显式输入命令。零 Context Load。
+- **Model-invoked**：省略 `disable-model-invocation`。描述在每轮对话中常驻上下文（产生 Context Load）。用于 Agent/Skill 自主触发。
+- **User-invoked**：配置 `disable-model-invocation: true`。对 Agent 物理隐藏（零 Context Load）。仅允许人类在终端显式输入 `/command` 触发。
+- **Router Skill**：当用户调用技能过多时，创建一个 User-invoked 技能作为入口，统一索引其他技能。
 
-除必须由 Agent 自动感知或被其他 Skill 内部嵌套调用的技能外，所有编排类技能一律设为用户调用。
+## 2. 描述编写规范 (Description)
 
-## 信息层级与渐进式暴露（Progressive Disclosure）
+- **前置核心词**：将描述的核心触发词放在句首。
+- **一分支一触发**：每个逻辑分支只保留 1 个核心触发词，擦除所有同义词重构。
+- **禁止重复正文**：描述仅声明触发条件，禁止重复正文中的实现细节。
 
-1. **Skill 主步骤（SKILL.md）**：按顺序书写的核心执行动作，每个步骤必须包含明确可查验的二元完成标准（Completion Criteria）。
-2. **同地参考文件（Co-located References/Assets）**：将具体的范式、规则或模板下沉到 `references/` 或 `assets/` 目录。**主 `SKILL.md` 中必须包含指向子文件的显式 Markdown 链接（例如 `[描述](references/file.md)`），否则 Agent 不会自动读取。**
+## 3. 信息层级 (Information Hierarchy)
 
-## 剪裁与无用语句检查（No-op Test）
+1. **In-skill Step**：`SKILL.md` 中的有序动作。每个步骤结尾必须绑定物理可查验的 **Completion Criterion**。
+2. **In-skill Reference**：`SKILL.md` 内平铺的静态规则。
+3. **External Reference**：下沉到独立文件的资料（如 [GLOSSARY.md](references/GLOSSARY.md)），通过 Markdown 链接按需加载（Progressive Disclosure）。
 
-对每一句话执行 No-op 测试：若删去该句不改变 Agent 的行为，直接删去整句。禁止使用“请注意”、“这非常重要”、“旨在帮助你”等无意义修辞废话。
+## 4. 技能切分时机 (When to Split)
 
-## 引导词（Leading Words）
+- **按调用切分**：当某个功能有独立触发词，或需要被其他技能调用时，切出独立的 Model-invoked 技能。
+- **按顺序切分**：当后续步骤会干扰 Agent 当前步骤的专注度时，将后续步骤隐藏到独立技能中（防止 Premature Completion）。
 
-使用模型预训练积累的高密度专业词汇（如 Tracer Bullet, Deep Module, Seam, Red-Green, Single Source of Truth, Expand-Contract），用单个词汇锚定整块复杂行为。
+## 5. 剪裁与无用语句擦除 (Pruning)
 
-## 失败模式防护（Failure Modes）
+- **Single Source of Truth**：每个规则只在一处定义，禁止多处重复。
+- **No-op Test**：句级测试。如果删去某句话对 Agent 的行为零影响，直接整句擦除。
+- **Leading Words**：使用大模型预训练固有词汇（如 `tight`, `red`, `tracer bullet`）替代长篇解释。
 
-- **防止过早完成（Premature Completion）**：使用二元硬性完成标准（如：测试全绿、所有变更已注册）。
-- **防止重复（Duplication）**：每个规则保持单源事实（Single Source of Truth），禁止多处复制。
-- **防止沉积（Sediment）**：更新时及时剔除已废弃的旧规则。
-- **正向断言（Positive Assertions）**：使用正向断言规定系统终态，禁止使用否定句式。
+## 6. 常见失败模式 (Failure Modes)
+
+- **Premature Completion**：步骤未真正完成就提前结束。防御：硬化二元 Completion Criterion，或切分隐藏后置步骤。
+- **Duplication**：同一语义多处定义。收拢为 Single Source of Truth。
+- **Sediment**：废弃的旧规则残留。定期清理擦除。
+- **Sprawl**：技能文件过长。下沉参考资料到独立文件。
+- **No-op**：默认已遵循的冗余规则。整句擦除。
+- **Negation**：使用否定句反向激活错误行为。强制使用正向断言（Positive Assertions）规定目标行为。

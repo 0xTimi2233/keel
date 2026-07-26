@@ -10,9 +10,6 @@ disable-model-invocation: true
 
 ## 执行流程
 
-1. **扫描 Git 热点（Hotspots）**：
-   运行 `git log --oneline --name-only` 统计修改最频繁的文件列表。
-2. **分析浅模块与耦合**：
-   找出修改频繁且接口庞大的浅模块（Shallow Modules），评估重构为深模块与六边形 Crate 的可行性。
-3. **生成 HTML 诊断报告**：
-   严格参照 [HTML-REPORT.md](references/HTML-REPORT.md) 中的格式，在 `.scratch/reports/architecture-report.html` 输出美观报告，并在浏览器中自动打开。
+1. **扫描 Git Hotspots**：运行 `git log --oneline --name-only` 统计高频修改文件。
+2. **分析浅模块**：识别接口庞大且修改频繁的浅模块，评估重构方案。
+3. **HTML 报告**：参照 [HTML-REPORT.md](references/HTML-REPORT.md) 格式在 `.scratch/reports/architecture-report.html` 输出报告并在浏览器中打开。

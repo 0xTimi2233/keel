@@ -10,10 +10,7 @@ disable-model-invocation: true
 
 ## 执行流程
 
-1. **探查代码库**：查看现有领域、端口与适配器，确定本 Feature 的技术接缝（Seams）。
-2. **合成 Spec 内容**：
-   查阅并严格按照 [SPEC-TEMPLATE.md](assets/SPEC-TEMPLATE.md) 格式在内存中合成规范。
-3. **生成 BDD 验收试卷**：
-   在 `tests/features/<feature>.feature` 或切片目录下生成 Given-When-Then 自然语言验收文本。
-4. **发布 Parent Spec Issue**：
-   调用 `gh issue create --title "Spec: <Name>" --body "..."`，发布到 GitHub，捕获 Issue ID。
+1. **探查代码库**：探查现有领域与端口，确定本 Feature 的技术接缝（Seams）。
+2. **合成 Spec 内容**：严格按照 [SPEC-TEMPLATE.md](assets/SPEC-TEMPLATE.md) 格式在内存中合成规范。
+3. **生成 BDD 验收试卷**：在 `tests/features/<feature>.feature` 生成 Given-When-Then 文本。
+4. **发布 Parent Spec Issue**：调用 `gh issue create --title "Spec: <Name>" --body "..."` 发布到 GitHub。

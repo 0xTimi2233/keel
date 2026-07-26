@@ -10,15 +10,9 @@ disable-model-invocation: true
 
 ## 执行流程
 
-1. **探查仓库环境**：
-   探查语言、包管理器、测试框架及当前包含的框架文件。
+1. **探查仓库环境**：探查语言、包管理器与测试框架。
 2. **初始化 GitHub Issue 标签**：
-   在问题追踪器建立 7 个标准标签（`bug`, `enhancement`, `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`）。
-   完整配置要求参见 [ISSUE-TRACKER-CONFIG.md](references/ISSUE-TRACKER-CONFIG.md)。
-3. **建立领域文档结构**：
-   在根目录下初始化 `docs/` 与 `docs/adr/`，若不存在则创建占位文件。
-4. **生成/补丁 AGENTS.md**：
-   在 `AGENTS.md` 中写入 Agent 行为宪法，涵盖：
-   - 契约优先（Contract-First）
-   - 六边形架构（Hexagonal Architecture）与端口适配器隔离
-   - 垂直切片（Vertical Slicing）与 BDD (.feature) 验收准则
+   在追踪器建立 7 个标准标签（`bug`, `enhancement`, `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`）。
+   配置规范见 [ISSUE-TRACKER-CONFIG.md](references/ISSUE-TRACKER-CONFIG.md)。
+3. **建立文档结构**：初始化 `docs/` 与 `docs/adr/`。
+4. **生成/补丁 AGENTS.md**：写入包含 Contract-First, Hexagonal Architecture, Vertical Slicing 及 BDD (.feature) 准则的宪法。

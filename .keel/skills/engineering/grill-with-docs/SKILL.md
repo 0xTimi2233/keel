@@ -10,9 +10,8 @@ disable-model-invocation: true
 
 ## 执行流程
 
-1. **深度盘问**：调用 `grilling` 技能逐问追问用户提出的业务方案。
+1. **深度盘问**：调用 [grilling SKILL.md](../productivity/grilling/SKILL.md) 逐问追问方案。
 2. **实时落盘**：
-   - 厘清的业务术语实时写入 `src/domains/<domain>/CONTEXT.md`。
-   - 敲定的硬性决策实时写入 `docs/adr/XXXX-title.md`。
-3. **生成输出总结**：
-   盘问结束获得用户确认后，总结已建立的共识，并引导用户使用 `/to-spec` 生成正式规格说明。
+   - 业务术语实时写入 `src/domains/<domain>/CONTEXT.md`。
+   - 硬性决策实时写入 `docs/adr/XXXX-title.md`。
+3. **引导下一个技能**：盘问获用户确认后，引导使用 `/to-spec` 生成正式 Spec。

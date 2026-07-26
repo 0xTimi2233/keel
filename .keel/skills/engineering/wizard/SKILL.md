@@ -1,16 +1,14 @@
 ---
 name: wizard
-description: 交互式 Bash 脚手架生成器。为人类用户生成安全的交互式环境变量与秘钥配置向导。
+description: Use when needing to generate a human-friendly interactive bash wizard for setting up environment variables or secrets.
 ---
 
 # 交互式向导生成器
 
-用于需要人类配置环境变量、秘钥或本地依赖工具链的场景。
+当需要人类配置环境变量、秘钥或依赖工具链时触发。
 
 ## 执行流程
 
-1. **确定缺失的依赖/配置项**。
-2. **生成单文件 Bash 脚本**：
-   在 `.scratch/wizards/` 下写入轻量交互脚本，采用 `read -p` 和条件判断引导用户输入。
-3. **提示用户执行**：
-   给出单行终端运行命令，由人类手动运行脚本完成安全配置。
+1. **确定缺失配置**。
+2. **生成单文件 Bash 脚本**：在 `.scratch/wizards/` 写入轻量交互脚本，采用 `read -p` 和防错条件判断。
+3. **提示用户执行**：输出单行运行指令，由人类手动运行。
