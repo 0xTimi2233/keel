@@ -1,0 +1,7 @@
+.idea/
+/target
+/node_modules
+/worktree
+.qoder
+evals/.env
+evals/output/
