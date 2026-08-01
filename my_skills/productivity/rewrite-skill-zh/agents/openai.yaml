@@ -1,0 +1,3 @@
+interface:
+  display_name: "Rewrite Skill in Chinese"
+  short_description: "将现有 Skill 重写为中文"
