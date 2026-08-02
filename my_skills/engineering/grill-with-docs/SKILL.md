@@ -1,6 +1,6 @@
 ---
 name: grill-with-docs
-description: 通过逐条追问打磨计划或设计，并产出文档（ADR 与术语表）
+description: 通过逐条追问打磨计划或设计，并同步打磨领域模型
 disable-model-invocation: true
 ---
 
