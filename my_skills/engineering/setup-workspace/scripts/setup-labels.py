@@ -1,43 +1,42 @@
 #!/usr/bin/env python3
-"""Create requested workflow labels and leave existing labels unchanged."""
+"""Create missing workflow labels and retain existing labels."""
 from __future__ import annotations
+
 import argparse
-import re
-from lib import platform, require_success, run_cli
 
-def parse_args() -> tuple[str, ...]:
+from lib import (
+    DEFAULT_LABELS,
+    add_platform_argument,
+    detect_platform,
+    emit,
+    run_entrypoint,
+)
+from providers import provider
+
+
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create missing workflow labels.")
-    parser.add_argument("labels", nargs="+", help="Label names to create or retain.")
-    return tuple(dict.fromkeys(parser.parse_args().labels))
-
-def main() -> None:
-    labels = parse_args()
-    if platform() == "gitlab":
-        for label in labels:
-            result = run_cli(["glab", "label", "list"])
-            exists = result.returncode == 0 and bool(
-                re.search(rf"(?<!\w){re.escape(label)}(?!\w)", result.stdout)
-            )
-            if exists:
-                print(f"label {label}: exists")
-                continue
-            result = run_cli(
-                ["glab", "label", "create", "-n", label, "-c", "#808080"]
-            )
-            require_success(result, f"label {label}")
-            print(f"label {label}: created")
-        return
-    result = run_cli(
-        ["gh", "label", "list", "--json", "name", "--jq", ".[].name"]
+    add_platform_argument(parser)
+    parser.add_argument(
+        "labels",
+        nargs="*",
+        help="Label names; defaults to the skill's recommended workflow labels.",
     )
-    existing = set(result.stdout.splitlines()) if result.returncode == 0 else set()
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    labels = tuple(dict.fromkeys(args.labels or DEFAULT_LABELS))
+    service = provider(detect_platform(args.platform))
     for label in labels:
-        if label in existing:
-            print(f"label {label}: exists")
+        if service.label_exists(label):
+            emit("exists", f"label {label}", "unchanged")
             continue
-        result = run_cli(["gh", "label", "create", label, "--color", "808080"])
-        require_success(result, f"label {label}")
-        print(f"label {label}: created")
+        service.create_label(label)
+        emit("created", f"label {label}", "color 808080")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    run_entrypoint(main)

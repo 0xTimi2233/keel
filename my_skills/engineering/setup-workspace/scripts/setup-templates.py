@@ -1,26 +1,44 @@
 #!/usr/bin/env python3
 """Install issue templates without overwriting existing files."""
 from __future__ import annotations
+
+import argparse
 from pathlib import Path
-import shutil
-from lib import platform
 
-SKILL_DIR = Path(__file__).resolve().parent.parent
+from lib import (
+    ActionError,
+    SKILL_DIR,
+    add_platform_argument,
+    detect_platform,
+    emit,
+    install_file,
+    run_entrypoint,
+)
 
-def main() -> None:
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Install issue templates.")
+    add_platform_argument(parser)
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    platform = detect_platform(args.platform)
     destination = (
         Path(".gitlab/issue_templates")
-        if platform() == "gitlab"
+        if platform == "gitlab"
         else Path(".github/ISSUE_TEMPLATE")
     )
-    destination.mkdir(parents=True, exist_ok=True)
-    for source in sorted((SKILL_DIR / "assets/issue-templates").glob("*.md")):
-        target = destination / source.name
-        if target.exists():
-            print(f"issue template {source.name}: exists")
-            continue
-        shutil.copy2(source, target)
-        print(f"issue template {source.name}: created")
+    sources = sorted((SKILL_DIR / "assets/issue-templates").glob("*.md"))
+    if not sources:
+        raise ActionError("issue templates", "no template assets found")
+    for source in sources:
+        item = f"issue template {source.name}"
+        status = install_file(source, destination / source.name, item)
+        emit(status, item, "installed" if status == "created" else "unchanged")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    run_entrypoint(main)

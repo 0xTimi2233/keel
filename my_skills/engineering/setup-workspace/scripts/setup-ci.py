@@ -1,76 +1,150 @@
 #!/usr/bin/env python3
-"""Install security CI and enable GitHub security settings."""
+"""Install security CI and enable supported repository security settings."""
 from __future__ import annotations
-import json
+
+import argparse
 from pathlib import Path
-import shutil
-from lib import platform, run_cli
+import re
+from typing import Any
 
-SKILL_DIR = Path(__file__).resolve().parent.parent
+from lib import (
+    ActionError,
+    GITLAB_SECURITY_TEMPLATES,
+    SKILL_DIR,
+    add_platform_argument,
+    clean_detail,
+    detect_platform,
+    emit,
+    install_file,
+    run_entrypoint,
+)
+from providers import GitHub
 
-def copy_if_missing(source: Path, destination: Path) -> str:
-    if destination.exists():
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Install security CI and enable repository security settings."
+    )
+    add_platform_argument(parser)
+    return parser.parse_args()
+
+
+def ensure_gitlab_ci() -> str:
+    source = SKILL_DIR / "assets/gitlab-ci.yml"
+    destination = Path(".gitlab-ci.yml")
+    if not destination.exists():
+        return install_file(source, destination, "GitLab security CI")
+    if not destination.is_file():
+        raise ActionError("GitLab security CI", ".gitlab-ci.yml is not a file")
+    try:
+        text = destination.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as error:
+        raise ActionError("GitLab security CI", clean_detail(str(error))) from error
+
+    missing = [
+        template for template in GITLAB_SECURITY_TEMPLATES if template not in text
+    ]
+    if not missing:
         return "exists"
-    shutil.copy2(source, destination)
-    return "created"
 
-def configure_github_setting(name: str, endpoint: str) -> None:
-    current = run_cli(["gh", "api", endpoint, "--jq", ".enabled"])
-    if current.returncode == 0 and current.stdout.strip() == "true":
-        print(f"{name}: exists")
-        return
-    result = run_cli(
-        ["gh", "api", "--method", "PUT", endpoint, "--input", "-"],
-        input_text=json.dumps({"enabled": True}),
-    )
-    print(f"{name}: {'created' if result.returncode == 0 else 'skipped'}")
-
-def configure_github_push_protection() -> None:
-    endpoint = "repos/{owner}/{repo}"
-    status_path = ".security_and_analysis.secret_scanning_push_protection.status"
-    current = run_cli(["gh", "api", endpoint, "--jq", status_path])
-    if current.returncode == 0 and current.stdout.strip() == "enabled":
-        print("secret scanning push protection: exists")
-        return
-    payload = {
-        "security_and_analysis": {
-            "secret_scanning_push_protection": {"status": "enabled"}
-        }
-    }
-    result = run_cli(
-        ["gh", "api", "--method", "PATCH", endpoint, "--input", "-"],
-        input_text=json.dumps(payload),
-    )
-    print(
-        "secret scanning push protection: "
-        f"{'created' if result.returncode == 0 else 'skipped'}"
-    )
-
-def main() -> None:
-    if platform() == "gitlab":
-        status = copy_if_missing(
-            SKILL_DIR / "assets/gitlab-ci.yml", Path(".gitlab-ci.yml")
+    lines = text.splitlines(keepends=True)
+    include_indexes = [
+        index
+        for index, line in enumerate(lines)
+        if re.match(r"^include:\s*(?:#.*)?(?:\r?\n)?$", line)
+    ]
+    if not include_indexes:
+        separator = "" if not text or text.endswith("\n") else "\n"
+        addition = "include:\n" + "".join(
+            f"  - template: {template}\n" for template in missing
         )
-        print(f"GitLab security CI: {status}")
-        return
-    github_dir = Path(".github")
-    workflows_dir = github_dir / "workflows"
-    workflows_dir.mkdir(parents=True, exist_ok=True)
+        updated = f"{text}{separator}{addition}"
+    elif len(include_indexes) == 1:
+        start = include_indexes[0]
+        end = len(lines)
+        first_content = None
+        for index in range(start + 1, len(lines)):
+            stripped = lines[index].strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            if not lines[index][0].isspace():
+                end = index
+                break
+            if first_content is None:
+                first_content = stripped
+        if first_content is not None and not first_content.startswith("-"):
+            raise ActionError(
+                "GitLab security CI",
+                "existing include mapping is not a list; merge the asset manually",
+            )
+        additions = [f"  - template: {template}\n" for template in missing]
+        lines[end:end] = additions
+        updated = "".join(lines)
+    else:
+        raise ActionError(
+            "GitLab security CI",
+            "multiple top-level include blocks found; merge the asset manually",
+        )
+
+    try:
+        destination.write_text(updated, encoding="utf-8")
+    except OSError as error:
+        raise ActionError("GitLab security CI", clean_detail(str(error))) from error
+    return "updated"
+
+
+def security_status(repository: dict[str, Any], feature: str) -> str | None:
+    security = repository.get("security_and_analysis")
+    value = security.get(feature) if isinstance(security, dict) else None
+    return value.get("status") if isinstance(value, dict) else None
+
+
+def configure_github() -> None:
+    github = GitHub()
     files = (
-        ("Dependabot configuration", "assets/dependabot.yml", github_dir / "dependabot.yml"),
-        ("Security workflow", "assets/workflows/security.yml", workflows_dir / "security.yml"),
+        (
+            "Dependabot configuration",
+            SKILL_DIR / "assets/dependabot.yml",
+            Path(".github/dependabot.yml"),
+        ),
+        (
+            "security workflow",
+            SKILL_DIR / "assets/workflows/security.yml",
+            Path(".github/workflows/security.yml"),
+        ),
     )
-    for name, source, destination in files:
-        status = copy_if_missing(SKILL_DIR / source, destination)
-        print(f"{name}: {status}")
-    configure_github_setting(
-        "secret scanning", "repos/{owner}/{repo}/secret-scanning"
-    )
-    configure_github_push_protection()
-    configure_github_setting(
-        "dependency security updates",
-        "repos/{owner}/{repo}/automated-security-fixes",
-    )
+    for item, source, destination in files:
+        status = install_file(source, destination, item)
+        emit(status, item, "installed" if status == "created" else "unchanged")
+
+    repository = github.repository()
+    for feature, item in (
+        ("secret_scanning", "secret scanning"),
+        ("secret_scanning_push_protection", "secret scanning push protection"),
+    ):
+        if security_status(repository, feature) == "enabled":
+            emit("exists", item, "enabled")
+            continue
+        github.update_security_feature(feature)
+        emit("created", item, "enabled")
+
+    if github.automated_security_fixes_enabled():
+        emit("exists", "dependency security updates", "enabled")
+    else:
+        github.enable_automated_security_fixes()
+        emit("created", "dependency security updates", "enabled")
+
+
+def main() -> int:
+    args = parse_args()
+    if detect_platform(args.platform) == "gitlab":
+        status = ensure_gitlab_ci()
+        detail = "security templates configured" if status != "exists" else "unchanged"
+        emit(status, "GitLab security CI", detail)
+    else:
+        configure_github()
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    run_entrypoint(main)
