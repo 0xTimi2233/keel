@@ -1,0 +1,5 @@
+interface:
+  display_name: "工程 skill 初始化"
+  short_description: "配置仓库的 issue 跟踪器、triage 标签与领域文档"
+policy:
+  allow_implicit_invocation: false
