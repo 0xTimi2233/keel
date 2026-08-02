@@ -23,7 +23,7 @@ my-skill/
 - **模型调用**：agent 可自主触发。代价是上下文开销：description 常驻上下文窗口。写法：在 description 写清触发场景（“当用户想要或提到…时使用”）
 - **用户调用**：description 对 agent 不可见，只能由用户输入名字触发，不占上下文。代价是认知负担：用户需自行记忆存在。写法：禁用模型调用，description 改为面向用户的一行摘要
 
-> 关闭模型自动调用：Anthropic 系: `disable-model-invocation = true`; OpenAI 系: `policy.allow_implicit_invocation = false`; 两者需同步修改，非禁用状态时省略
+> 禁用模型调用：Anthropic 系: `disable-model-invocation = true`; OpenAI 系: `policy.allow_implicit_invocation = false`; 两者需同步修改，非禁用状态时省略
 
 仅当 agent 需自主触发或需要被其他 skill 调用时做成模型调用，其余做成用户调用。用户调用型 skill 多到难以记住时，写一个 router skill 汇总入口
 
