@@ -4,4 +4,4 @@
 /worktree
 .qoder
 evals/.env
-evals/output/
+evals/output/__pycache__/
