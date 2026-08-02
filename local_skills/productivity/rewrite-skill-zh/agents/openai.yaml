@@ -1,0 +1,5 @@
+interface:
+  display_name: "Rewrite Skill in Chinese"
+  short_description: "将英文 skill 重写为 中文 skill"
+policy:
+  allow_implicit_invocation: false
