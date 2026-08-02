@@ -1,0 +1,54 @@
+schemaVersion: 1
+id: grilling-multi-turn
+description: 验证 grilling 会在同一线程逐条追问，确认前不执行计划
+fixture: empty
+targetSkills:
+  - grilling
+runtime:
+  sandboxMode: workspace-write
+  timeoutMs: 180000
+stages:
+  - id: grill
+    thread: new
+    turns:
+      - user: |
+          请 grill 这份计划：我们准备两周后把结算服务一次性改成事件驱动，
+          目标是降低耦合；目前没有回滚方案，也没有定义成功指标。
+        expect:
+          response:
+            questionCount: 1
+          skills:
+            used:
+              - grilling
+          files:
+            unchanged: true
+      - user: |
+          关于你刚才的问题：我最在意迁移期间不能重复扣款；允许短暂停机，
+          但最多五分钟。请继续 grill。
+        expect:
+          response:
+            questionCount: 1
+          files:
+            unchanged: true
+      - user: |
+          关于你刚才的问题：成功指标定为重复扣款为零，并且人工对账量不增加。
+          还有未决问题就继续逐条问。
+        expect:
+          response:
+            questionCount: 1
+          files:
+            unchanged: true
+      - user: |
+          我接受你刚才的推荐，并确认已经达成共识。请只总结共识和仍需验证的假设，
+          不要开始执行迁移。
+        expect:
+          response:
+            endsWithQuestion: false
+          files:
+            unchanged: true
+expect:
+  skills:
+    used:
+      - grilling
+  files:
+    unchanged: true

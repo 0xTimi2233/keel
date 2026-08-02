@@ -1,0 +1,21 @@
+- description: grilling 多轮连续追问
+  vars:
+    scenarioFile: scenarios/development/grilling-multi-turn.yaml
+  assert:
+    - type: javascript
+      value: file://assertions/scenario-contract.mjs
+
+- description: grill-with-docs 真实文件跨线程交接
+  vars:
+    scenarioFile: scenarios/development/grill-with-docs-handoff.yaml
+  assert:
+    - type: javascript
+      value: file://assertions/scenario-contract.mjs
+
+- description: domain-modeling 使用 Golden Fixture 检查既有术语
+  vars:
+    scenarioFile: scenarios/development/domain-modeling-golden.yaml
+  assert:
+    - type: javascript
+      value: file://assertions/scenario-contract.mjs
+

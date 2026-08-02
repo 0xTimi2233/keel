@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-08-02T16:04:37.853Z",
+  "source": "../my_skills",
+  "sha256": "2bde2953a916a90fa3951d10ddd8023d4dceb716774980793d2677cfaebb449e",
+  "skills": [
+    {
+      "name": "domain-modeling",
+      "sourcePath": "engineering/domain-modeling"
+    },
+    {
+      "name": "grill-me",
+      "sourcePath": "productivity/grill-me"
+    },
+    {
+      "name": "grill-with-docs",
+      "sourcePath": "engineering/grill-with-docs"
+    },
+    {
+      "name": "grilling",
+      "sourcePath": "productivity/grilling"
+    },
+    {
+      "name": "setup-workspace",
+      "sourcePath": "engineering/setup-workspace"
+    }
+  ]
+}

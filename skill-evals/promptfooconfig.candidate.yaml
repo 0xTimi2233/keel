@@ -1,0 +1,16 @@
+description: 当前中文 SKILL 开发集
+
+prompts:
+  - "{{scenarioFile}}"
+
+providers:
+  - id: file://providers/codex-scenario.mjs
+    label: candidate
+    config:
+      variant: candidate
+
+tests: file://tests/development.yaml
+
+evaluateOptions:
+  maxConcurrency: 1
+

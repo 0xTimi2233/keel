@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: grilling-live-smoke
+description: 验证 Codex SDK、SKILL 发现、中文响应和文件快照
+fixture: empty
+targetSkills:
+  - grilling
+runtime:
+  sandboxMode: workspace-write
+  timeoutMs: 180000
+turns:
+  - user: |
+      请 grill 这个计划：明天直接删除所有旧接口，但我们还没有统计调用方。
+      现在只逐条问我，不要执行删除。
+    expect:
+      response:
+        questionCount: 1
+      skills:
+        used:
+          - grilling
+      files:
+        unchanged: true

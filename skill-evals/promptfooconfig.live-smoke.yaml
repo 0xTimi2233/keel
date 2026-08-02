@@ -1,0 +1,22 @@
+description: Codex SDK 与中文 SKILL 单轮 live smoke
+
+prompts:
+  - "{{scenarioFile}}"
+
+providers:
+  - id: file://providers/codex-scenario.mjs
+    label: candidate-live-smoke
+    config:
+      variant: candidate
+
+tests:
+  - description: grilling 单轮 live smoke
+    vars:
+      scenarioFile: scenarios/smoke/grilling-one-turn.yaml
+    assert:
+      - type: javascript
+        value: file://assertions/scenario-contract.mjs
+
+evaluateOptions:
+  maxConcurrency: 1
+

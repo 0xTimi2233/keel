@@ -1,0 +1,9 @@
+node_modules/
+.state/
+.cache/
+.logs/
+.env
+results/*
+!results/.gitkeep
+variants/.baseline-staging-*
+variants/baseline-backups/

@@ -1,0 +1,16 @@
+description: 中文 SKILL 无目标 SKILL 控制组
+
+prompts:
+  - "{{scenarioFile}}"
+
+providers:
+  - id: file://providers/codex-scenario.mjs
+    label: no-target-skill
+    config:
+      variant: no-skill
+
+tests: file://tests/development.yaml
+
+evaluateOptions:
+  maxConcurrency: 1
+

@@ -1,0 +1,31 @@
+schemaVersion: 1
+id: domain-modeling-golden-context
+description: 用固定前置领域文件定位既有术语冲突处理能力
+fixture: order-context
+targetSkills:
+  - domain-modeling
+runtime:
+  sandboxMode: workspace-write
+  timeoutMs: 180000
+stages:
+  - id: challenge-existing-term
+    thread: new
+    turns:
+      - user: |
+          我想把“顾客在网页上点了提交、但还没有确认付款”的东西也叫 Order，
+          并把现有 Order 政名为 PaidOrder。请检查仓库里的领域语言并给建议；
+          在我确认前不要修改文件。
+        expect:
+          response:
+            containsAll:
+              - Order
+              - Customer
+          skills:
+            used:
+              - domain-modeling
+          files:
+            unchanged: true
+expect:
+  files:
+    unchanged: true
+

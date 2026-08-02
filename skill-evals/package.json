@@ -1,0 +1,29 @@
+{
+  "name": "keel-skill-evals",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "baseline:snapshot": "node scripts/snapshot-baseline.mjs",
+    "test": "node --test tests/unit/*.test.mjs",
+    "validate": "node scripts/validate-configs.mjs",
+    "smoke": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.smoke.yaml --no-cache -o results/smoke.json",
+    "smoke:codex": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.live-smoke.yaml --no-cache -o results/live-smoke.json",
+    "eval:candidate": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.candidate.yaml --no-cache -o results/candidate.json",
+    "eval:compare": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.codex.yaml --no-cache -o results/compare.json",
+    "eval:control": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.control.yaml --no-cache -o results/control.json",
+    "eval:acceptance": "node scripts/run-promptfoo.mjs eval -c promptfooconfig.acceptance.yaml --no-cache -o results/acceptance.json",
+    "report:compare": "node scripts/compare-results.mjs results/compare.json",
+    "gate:compare": "node scripts/compare-results.mjs results/compare.json --fail-on-regression",
+    "report:acceptance": "node scripts/compare-results.mjs results/acceptance.json",
+    "gate:acceptance": "node scripts/compare-results.mjs results/acceptance.json --fail-on-regression"
+  },
+  "dependencies": {
+    "@openai/codex-sdk": "0.146.0",
+    "promptfoo": "0.121.20",
+    "yaml": "2.9.0"
+  }
+}

@@ -1,0 +1,20 @@
+description: 用户冻结的中文 SKILL 验收集
+
+prompts:
+  - "{{scenarioFile}}"
+
+providers:
+  - id: file://providers/codex-scenario.mjs
+    label: baseline
+    config:
+      variant: baseline
+  - id: file://providers/codex-scenario.mjs
+    label: candidate
+    config:
+      variant: candidate
+
+tests: file://tests/acceptance.yaml
+
+evaluateOptions:
+  maxConcurrency: 1
+

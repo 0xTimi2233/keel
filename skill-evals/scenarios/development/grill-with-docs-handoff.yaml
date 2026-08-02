@@ -1,0 +1,67 @@
+schemaVersion: 1
+id: grill-with-docs-real-handoff
+description: 上游多轮会话写入领域文件，下游新线程读取真实产物
+fixture: empty
+targetSkills:
+  - grill-with-docs
+  - grilling
+  - domain-modeling
+runtime:
+  sandboxMode: workspace-write
+  timeoutMs: 180000
+stages:
+  - id: upstream
+    thread: new
+    turns:
+      - user: |
+          /grill-with-docs
+          我们要设计一个仓储发运功能。业务方暂时把“准备发货”和“已经发运”
+          都叫 Shipment。请逐条 grill，并同步维护领域模型。
+        expect:
+          response:
+            questionCount: 1
+          skills:
+            used:
+              - grill-with-docs
+              - grilling
+              - domain-modeling
+          files:
+            allowChanges:
+              - CONTEXT.md
+              - docs/adr/**
+      - user: |
+          关于你刚才的问题：我们决定把仓库尚未交给承运商的意图叫
+          ShipmentIntent；只有完成交接后才叫 Shipment。这个术语决定已经敲定，
+          请记录后继续逐条 grill。
+        expect:
+          response:
+            questionCount: 1
+          files:
+            requiredChanges:
+              - CONTEXT.md
+            allowChanges:
+              - CONTEXT.md
+              - docs/adr/**
+  - id: downstream
+    thread: new
+    turns:
+      - user: |
+          这是一个新的对话阶段。请仅根据当前仓库中的 CONTEXT.md，说明
+          “ShipmentIntent”和“Shipment”的边界；不要假设你看过此前对话，也不要改文件。
+        expect:
+          response:
+            containsAll:
+              - ShipmentIntent
+              - Shipment
+          files:
+            unchanged: true
+expect:
+  files:
+    allowChanges:
+      - CONTEXT.md
+      - docs/adr/**
+    required:
+      - path: CONTEXT.md
+        containsAll:
+          - ShipmentIntent
+          - Shipment

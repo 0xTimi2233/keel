@@ -1,0 +1,20 @@
+description: SKILL 评测框架无模型 smoke
+
+prompts:
+  - "{{reportFile}}"
+
+providers:
+  - id: file://providers/report-fixture.mjs
+    label: fixture-report
+
+tests:
+  - description: 确定性评分器可读取并通过合法报告
+    vars:
+      reportFile: fixtures/reports/passing-report.json
+    assert:
+      - type: javascript
+        value: file://assertions/scenario-contract.mjs
+
+evaluateOptions:
+  maxConcurrency: 1
+

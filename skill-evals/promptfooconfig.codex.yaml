@@ -1,0 +1,20 @@
+description: 中文 SKILL baseline / candidate 对照
+
+prompts:
+  - "{{scenarioFile}}"
+
+providers:
+  - id: file://providers/codex-scenario.mjs
+    label: baseline
+    config:
+      variant: baseline
+  - id: file://providers/codex-scenario.mjs
+    label: candidate
+    config:
+      variant: candidate
+
+tests: file://tests/development.yaml
+
+evaluateOptions:
+  maxConcurrency: 1
+

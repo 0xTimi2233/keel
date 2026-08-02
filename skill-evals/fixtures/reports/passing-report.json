@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "scenario": {
+    "schemaVersion": 1,
+    "id": "smoke-pass",
+    "description": "评分器 smoke",
+    "fixture": "empty",
+    "targetSkills": ["grilling"],
+    "runtime": {
+      "sandboxMode": "read-only",
+      "timeoutMs": 1000
+    },
+    "stages": [
+      {
+        "id": "main",
+        "thread": "new",
+        "turns": [
+          {
+            "user": "请 grill 我的计划",
+            "expect": {
+              "response": {
+                "containsAll": ["建议", "优先"],
+                "questionCount": 1,
+                "endsWithQuestion": true
+              },
+              "skills": {
+                "used": ["grilling"]
+              },
+              "files": {
+                "unchanged": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "files": {
+        "unchanged": true
+      }
+    },
+    "source": "fixtures/reports/passing-report.json"
+  },
+  "variant": "fixture",
+  "installedSkills": ["grilling"],
+  "skillsUsed": ["grilling"],
+  "stages": [
+    {
+      "id": "main",
+      "thread": "new",
+      "threadId": "fixture-thread",
+      "skillsUsed": ["grilling"],
+      "changedFiles": [],
+      "fileDiff": {
+        "created": [],
+        "modified": [],
+        "deleted": []
+      },
+      "turns": [
+        {
+          "index": 0,
+          "user": "请 grill 我的计划",
+          "response": "我建议先明确约束。你希望优先保证哪一项？",
+          "threadId": "fixture-thread",
+          "skillsUsed": ["grilling"],
+          "changedFiles": [],
+          "fileDiff": {
+            "created": [],
+            "modified": [],
+            "deleted": []
+          },
+          "usage": null,
+          "trace": []
+        }
+      ]
+    }
+  ],
+  "final": {
+    "changedFiles": [],
+    "fileDiff": {
+      "created": [],
+      "modified": [],
+      "deleted": []
+    },
+    "snapshot": {
+      "files": {}
+    }
+  },
+  "usage": {}
+}
+
