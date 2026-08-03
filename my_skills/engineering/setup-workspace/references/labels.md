@@ -4,19 +4,20 @@
 
 ## 类型
 
-- bug：意外行为
-- enhancement：新功能请求
+- type:bug：意外行为
+- type:feature：新功能请求
 
 ## 优先级
 
-- P1：紧急，先处理
-- P2：正常
-- P3：可推迟
+- priority:P1：紧急，先处理
+- priority:P2：正常
+- priority:P3：可推迟
+- priority:P4：低优先
 
-## 状态
+## 阶段
 
-- needs-triage：待分诊，赋优先级后移除
-- needs-info：缺信息，等待补充
-- ready-for-agent：可交给 agent 处理
-- ready-for-human：需要人处理
-- wontfix：不修复，关闭
+- stage:needs-triage：待分诊，赋优先级后移除
+- stage:needs-info：缺信息，等待补充
+- stage:ready-for-agent：可交给 agent 处理
+- stage:ready-for-human：需要人处理
+- stage:wontfix：不修复，关闭

@@ -2,7 +2,8 @@ name: Bug report
 description: 报告一个缺陷，帮助定位与修复
 title: "[Bug] "
 labels:
-  - needs-triage
+  - type:bug
+  - stage:needs-triage
 body:
   - type: textarea
     id: steps
