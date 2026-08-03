@@ -1,7 +1,8 @@
 ---
 title: "[Bug] 一句话描述"
 labels:
-  - needs-triage
+  - type:bug
+  - stage:needs-triage
 ---
 
 ## 复现步骤

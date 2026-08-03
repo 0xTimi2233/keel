@@ -79,10 +79,11 @@ class GitHub:
             "required_status_checks": {"strict": True, "contexts": []},
             "enforce_admins": True,
             "required_pull_request_reviews": {
-                "required_approving_review_count": 1,
+                "required_approving_review_count": 0,
                 "dismiss_stale_reviews": True,
             },
             "restrictions": None,
+            "allow_force_pushes": False,
         }
         require_success(
             self.api(

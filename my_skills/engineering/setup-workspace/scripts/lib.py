@@ -15,11 +15,17 @@ from urllib.parse import quote, urlsplit
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_LABELS = (
-    "needs-triage",
-    "needs-info",
-    "ready-for-agent",
-    "ready-for-human",
-    "wontfix",
+    "type:bug",
+    "type:feature",
+    "priority:P1",
+    "priority:P2",
+    "priority:P3",
+    "priority:P4",
+    "stage:needs-triage",
+    "stage:needs-info",
+    "stage:ready-for-agent",
+    "stage:ready-for-human",
+    "stage:wontfix",
 )
 PLATFORMS = ("github", "gitlab")
 GITLAB_SECURITY_TEMPLATES = (
