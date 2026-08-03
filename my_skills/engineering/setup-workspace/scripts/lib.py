@@ -14,45 +14,15 @@ from typing import Callable, NoReturn
 from urllib.parse import quote, urlsplit
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
-DEFAULT_LABELS = (
-    "type:bug",
-    "type:feature",
-    "priority:P1",
-    "priority:P2",
-    "priority:P3",
-    "priority:P4",
-    "stage:needs-triage",
-    "stage:needs-info",
-    "stage:ready-for-agent",
-    "stage:ready-for-human",
-    "stage:wontfix",
-)
-LABEL_COLORS = {
-    "type:bug": "d73a4a",
-    "type:feature": "a2eeef",
-    "priority:P1": "b60205",
-    "priority:P2": "d93f0b",
-    "priority:P3": "fbca04",
-    "priority:P4": "0e8a16",
-    "stage:needs-triage": "ededed",
-    "stage:needs-info": "d455d0",
-    "stage:ready-for-agent": "8fc951",
-    "stage:ready-for-human": "0052cc",
-    "stage:wontfix": "6f42c1",
-}
-LABEL_DESCRIPTIONS = {
-    "type:bug": "bug",
-    "type:feature": "feature",
-    "priority:P1": "urgent",
-    "priority:P2": "high",
-    "priority:P3": "normal",
-    "priority:P4": "low",
-    "stage:needs-triage": "待分诊",
-    "stage:needs-info": "缺信息",
-    "stage:ready-for-agent": "可交给 agent",
-    "stage:ready-for-human": "需要人处理",
-    "stage:wontfix": "不修复",
-}
+
+
+def load_labels() -> dict[str, dict]:
+    path = SKILL_DIR / "references/labels.json"
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+LABELS = load_labels()
 PLATFORMS = ("github", "gitlab")
 GITLAB_SECURITY_TEMPLATES = (
     "Jobs/SAST.gitlab-ci.yml",

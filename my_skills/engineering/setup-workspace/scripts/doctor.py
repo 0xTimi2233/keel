@@ -10,7 +10,7 @@ from urllib.parse import unquote
 
 from lib import (
     ActionError,
-    DEFAULT_LABELS,
+    LABELS,
 GITLAB_SECURITY_TEMPLATES,
     Report,
     add_platform_argument,
@@ -85,7 +85,7 @@ def github_permission_report(repository: dict[str, Any]) -> Report:
 def github_reports() -> list[Report]:
     github = GitHub()
     reports = [Report("OK", "platform", "github")]
-    for label in DEFAULT_LABELS:
+    for label in LABELS:
         reports.append(
             presence(
                 f"label {label}",
@@ -172,7 +172,7 @@ def gitlab_reports() -> list[Report]:
     reports = [
         Report("OK", "platform", f"gitlab ({unquote(gitlab.project)})")
     ]
-    for label in DEFAULT_LABELS:
+    for label in LABELS:
         reports.append(
             presence(
                 f"label {label}",
