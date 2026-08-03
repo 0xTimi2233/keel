@@ -1,0 +1,26 @@
+name: Feature request
+description: 提出一个功能请求
+title: "[Feature] "
+labels:
+  - needs-triage
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: 想做什么
+      description: 从使用者角度描述期望的能力，一两句话
+      placeholder: 希望产品能够……
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 为什么需要
+      description: 缺少它带来什么问题，或有了它能做什么
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 场景示例
+      description: 谁、在什么情况下、做了什么、期望得到什么
+      placeholder: |
+        作为……，当……时，我想……，以便……
