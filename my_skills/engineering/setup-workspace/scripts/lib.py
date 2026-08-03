@@ -27,6 +27,19 @@ DEFAULT_LABELS = (
     "stage:ready-for-human",
     "stage:wontfix",
 )
+LABEL_COLORS = {
+    "type:bug": "d73a4a",
+    "type:feature": "a2eeef",
+    "priority:P1": "b60205",
+    "priority:P2": "d93f0b",
+    "priority:P3": "fbca04",
+    "priority:P4": "0e8a16",
+    "stage:needs-triage": "ededed",
+    "stage:needs-info": "d455d0",
+    "stage:ready-for-agent": "8fc951",
+    "stage:ready-for-human": "0052cc",
+    "stage:wontfix": "6f42c1",
+}
 PLATFORMS = ("github", "gitlab")
 GITLAB_SECURITY_TEMPLATES = (
     "Jobs/SAST.gitlab-ci.yml",

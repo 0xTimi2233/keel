@@ -7,6 +7,7 @@ import argparse
 
 from lib import (
     DEFAULT_LABELS,
+    LABEL_COLORS,
     add_platform_argument,
     detect_platform,
     emit,
@@ -32,8 +33,8 @@ def main() -> int:
         if service.label_exists(label):
             emit("exists", f"label {label}", "unchanged")
             continue
-        service.create_label(label)
-        emit("created", f"label {label}", "color 808080")
+        service.create_label(label, LABEL_COLORS.get(label, "808080"))
+        emit("created", f"label {label}", f"color {LABEL_COLORS.get(label, '808080')}")
     return 0
 
 if __name__ == "__main__":

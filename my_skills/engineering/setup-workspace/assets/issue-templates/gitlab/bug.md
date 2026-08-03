@@ -1,5 +1,4 @@
 ---
-title: "[Bug] 一句话描述"
 labels:
   - type:bug
   - stage:needs-triage
@@ -16,3 +15,6 @@ labels:
 
 
 ## 环境
+
+- macOS Version: [e.g. 26.4.1]
+- App Version: [e.g. 1.2.3]

@@ -1,5 +1,4 @@
 ---
-title: "[Feature] 一句话描述"
 labels:
   - type:feature
   - stage:needs-triage
