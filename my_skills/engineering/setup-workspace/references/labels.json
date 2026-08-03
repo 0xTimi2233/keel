@@ -1,0 +1,13 @@
+{
+  "type:bug": {"color": "#d73a4a", "description": "bug"},
+  "type:feature": {"color": "#a2eeef", "description": "feature"},
+  "priority:P1": {"color": "#b60205", "description": "urgent"},
+  "priority:P2": {"color": "#d93f0b", "description": "high"},
+  "priority:P3": {"color": "#fbca04", "description": "normal"},
+  "priority:P4": {"color": "#0e8a16", "description": "low"},
+  "stage:needs-triage": {"color": "#ededed", "description": "待分诊"},
+  "stage:needs-info": {"color": "#d455d0", "description": "需要补充信息"},
+  "stage:ready-for-agent": {"color": "#8fc951", "description": "可交给 agent"},
+  "stage:ready-for-human": {"color": "#0052cc", "description": "需要人处理"},
+  "stage:wontfix": {"color": "#6f42c1", "description": "不处理"}
+}

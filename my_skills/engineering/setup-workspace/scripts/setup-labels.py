@@ -6,9 +6,7 @@ from __future__ import annotations
 import argparse
 
 from lib import (
-    DEFAULT_LABELS,
-    LABEL_COLORS,
-    LABEL_DESCRIPTIONS,
+    LABELS,
     add_platform_argument,
     detect_platform,
     emit,
@@ -28,16 +26,17 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    labels = tuple(dict.fromkeys(args.labels or DEFAULT_LABELS))
+    labels = tuple(dict.fromkeys(args.labels or LABELS))
     service = provider(detect_platform(args.platform))
     for label in labels:
+        meta = LABELS.get(label, {})
         if service.label_exists(label):
             emit("exists", f"label {label}", "unchanged")
             continue
         service.create_label(
-            label, LABEL_COLORS.get(label, "808080"), LABEL_DESCRIPTIONS.get(label, "")
+            label, meta.get("color", "#808080"), meta.get("description", "")
         )
-        emit("created", f"label {label}", f"color {LABEL_COLORS.get(label, '808080')}")
+        emit("created", f"label {label}", f"color {meta.get('color', '#808080')}")
     return 0
 
 if __name__ == "__main__":
