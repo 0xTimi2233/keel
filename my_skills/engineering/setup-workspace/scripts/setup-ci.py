@@ -119,13 +119,20 @@ def configure_github() -> None:
         status = install_file(source, destination, item)
         emit(status, item, "installed" if status == "created" else "unchanged")
 
+    repository = github.repository()
+    if repository.get("visibility") != "public":
+        emit("skipped", "secret scanning", "requires paid plan on private repositories")
+        emit("skipped", "secret scanning push protection", "requires paid plan on private repositories")
+        emit("skipped", "dependency graph", "requires paid plan on private repositories")
+        emit("skipped", "dependency security updates", "requires paid plan on private repositories")
+        return
+
     if github.vulnerability_alerts_enabled():
         emit("exists", "dependency graph", "enabled")
     else:
         github.enable_vulnerability_alerts()
         emit("created", "dependency graph", "enabled")
 
-    repository = github.repository()
     for feature, item in (
         ("secret_scanning", "secret scanning"),
         ("secret_scanning_push_protection", "secret scanning push protection"),
