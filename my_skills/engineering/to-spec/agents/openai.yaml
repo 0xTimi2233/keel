@@ -1,0 +1,3 @@
+interface:
+  display_name: "规格化"
+  short_description: "需求转为契约文件"

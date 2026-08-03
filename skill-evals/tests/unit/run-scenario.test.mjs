@@ -37,13 +37,13 @@ test("reuses a thread for turns and hands real files to a new thread", async () 
         calls.push({ id, input });
         if (input === "写入术语") {
           await fs.writeFile(
-            path.join(workspaceRoot, "CONTEXT.md"),
+            path.join(workspaceRoot, "context.md"),
             "# 术语\n\n- ShipmentIntent：发运意图。\n",
           );
         }
         const response =
           input === "读取术语"
-            ? await fs.readFile(path.join(workspaceRoot, "CONTEXT.md"), "utf8")
+            ? await fs.readFile(path.join(workspaceRoot, "context.md"), "utf8")
             : "下一项？";
         return {
           finalResponse: response,
@@ -84,7 +84,7 @@ test("reuses a thread for turns and hands real files to a new thread", async () 
   );
   assert.match(report.stages[1].turns[0].response, /ShipmentIntent/u);
   assert.deepEqual(report.skillsUsed, ["grilling"]);
-  assert.deepEqual(report.final.changedFiles, ["CONTEXT.md"]);
+  assert.deepEqual(report.final.changedFiles, ["context.md"]);
   assert.equal(
     await fs
       .stat(path.join(WORKSPACES_ROOT, report.workspace))

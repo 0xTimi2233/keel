@@ -21,7 +21,7 @@ stages:
     thread: new
     turns:
       - user: |
-          请逐条询问我，并在术语敲定后写入 CONTEXT.md。
+          请逐条询问我，并在术语敲定后写入 context.md。
         expect:
           response:
             questionCount: 1
@@ -29,12 +29,12 @@ stages:
           skills:
             used: [producer-skill]
           files:
-            allowChanges: [CONTEXT.md]
+            allowChanges: [context.md]
   - id: consumer
     thread: new
     turns:
       - user: |
-          请读取 CONTEXT.md 并解释术语。
+          请读取 context.md 并解释术语。
         expect:
           response:
             containsAll: [核心术语]
@@ -44,9 +44,9 @@ stages:
             unchanged: true
 expect:
   files:
-    requiredChanges: [CONTEXT.md]
+    requiredChanges: [context.md]
     required:
-      - path: CONTEXT.md
+      - path: context.md
         containsAll: [核心术语]
 ```
 

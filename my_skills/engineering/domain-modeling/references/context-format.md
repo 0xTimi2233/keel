@@ -1,4 +1,4 @@
-# CONTEXT.md 格式
+# context.md 格式
 
 ## 结构
 
@@ -35,18 +35,18 @@
 
 ## 单上下文与多上下文
 
-**单上下文（多数仓库）**：根目录一个 `CONTEXT.md`
+**单上下文（多数仓库）**：根目录一个 `context.md`
 
-**多上下文**：根目录 `CONTEXT-MAP.md` 列出各上下文的位置与关系：
+**多上下文**：根目录 `context-map.md` 列出各上下文的位置与关系：
 
 ```md
 # 上下文地图
 
 ## 上下文
 
-- [Ordering](./src/ordering/CONTEXT.md) — 接收并跟踪客户订单
-- [Billing](./src/billing/CONTEXT.md) — 生成发票并处理付款
-- [Fulfillment](./src/fulfillment/CONTEXT.md) — 管理仓库拣货与发货
+- [Ordering](./src/ordering/context.md) — 接收并跟踪客户订单
+- [Billing](./src/billing/context.md) — 生成发票并处理付款
+- [Fulfillment](./src/fulfillment/context.md) — 管理仓库拣货与发货
 
 ## 关系
 
@@ -57,8 +57,8 @@
 
 推断采用哪种结构：
 
-- 存在 `CONTEXT-MAP.md` → 读它找上下文
-- 只有根 `CONTEXT.md` → 单上下文
-- 都不存在 → 第一个术语敲定时惰性创建根 `CONTEXT.md`
+- 存在 `context-map.md` → 读它找上下文
+- 只有根 `context.md` → 单上下文
+- 都不存在 → 第一个术语敲定时惰性创建根 `context.md`
 
 多上下文时推断当前话题属于哪个上下文，不确定就问

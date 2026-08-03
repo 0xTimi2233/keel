@@ -27,7 +27,7 @@ stages:
               - domain-modeling
           files:
             allowChanges:
-              - CONTEXT.md
+              - context.md
               - docs/adr/**
       - user: |
           关于你刚才的问题：我们决定把仓库尚未交给承运商的意图叫
@@ -38,15 +38,15 @@ stages:
             questionCount: 1
           files:
             requiredChanges:
-              - CONTEXT.md
+              - context.md
             allowChanges:
-              - CONTEXT.md
+              - context.md
               - docs/adr/**
   - id: downstream
     thread: new
     turns:
       - user: |
-          这是一个新的对话阶段。请仅根据当前仓库中的 CONTEXT.md，说明
+          这是一个新的对话阶段。请仅根据当前仓库中的 context.md，说明
           “ShipmentIntent”和“Shipment”的边界；不要假设你看过此前对话，也不要改文件。
         expect:
           response:
@@ -58,10 +58,10 @@ stages:
 expect:
   files:
     allowChanges:
-      - CONTEXT.md
+      - context.md
       - docs/adr/**
     required:
-      - path: CONTEXT.md
+      - path: context.md
         containsAll:
           - ShipmentIntent
           - Shipment

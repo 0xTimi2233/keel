@@ -53,8 +53,8 @@ candidate 放宽标准。
 这三项是测试层级，不是训练/测试/验证三个数据集。
 
 对于 `grill-with-docs`，真实链路场景保留同一工作区并切换新 thread。新 thread 看不到旧
-对话，因此如果它能正确解释术语，证据来自上游实际写入的 `CONTEXT.md`。独立的
-`domain-modeling-golden.yaml` 则用固定 `CONTEXT.md` 排除上游波动。
+对话，因此如果它能正确解释术语，证据来自上游实际写入的 `context.md`。独立的
+`domain-modeling-golden.yaml` 则用固定 `context.md` 排除上游波动。
 
 ## acceptance 的保密程度
 

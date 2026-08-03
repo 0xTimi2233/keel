@@ -126,8 +126,8 @@ case 工作区默认位于系统临时目录的 `keel-skill-eval-workspaces/`，
 
 `scenarios/development/grill-with-docs-handoff.yaml` 采用两阶段：
 
-1. 上游 thread 运行 `grill-with-docs`，允许 `domain-modeling` 写 `CONTEXT.md`；
-2. 下游新 thread 复用工作区，只根据实际 `CONTEXT.md` 回答。
+1. 上游 thread 运行 `grill-with-docs`，允许 `domain-modeling` 写 `context.md`；
+2. 下游新 thread 复用工作区，只根据实际 `context.md` 回答。
 
 因此，“grilling 不执行被讨论的计划”与“domain-modeling 同步领域文件”没有被写成全局
 冲突。文件权限按场景定义：纯 grilling 场景要求文件不变，组合场景明确允许并要求领域
