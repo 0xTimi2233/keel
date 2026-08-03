@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Protect the main branch and retain existing protection."""
+# 配置 main 分支保护，已配置的保留
+# 示例：python3 protect-main.py [--platform github|gitlab]
 from __future__ import annotations
 
 import argparse
@@ -7,12 +8,10 @@ import argparse
 from lib import add_platform_argument, detect_platform, emit, run_entrypoint
 from providers import provider
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Protect the main branch.")
     add_platform_argument(parser)
     return parser.parse_args()
-
 
 def main() -> int:
     args = parse_args()
@@ -23,7 +22,6 @@ def main() -> int:
     service.protect_main()
     emit("created", "main branch protection", "configured")
     return 0
-
 
 if __name__ == "__main__":
     run_entrypoint(main)

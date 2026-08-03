@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Report workspace infrastructure without changing local or remote state."""
+# 探测仓库工程设施现状：平台、标签、分支保护、issue 模板、CI、安全、权限
+# 示例：python3 doctor.py [--platform github|gitlab]
 from __future__ import annotations
 
 import argparse
@@ -20,14 +21,9 @@ GITLAB_SECURITY_TEMPLATES,
 )
 from providers import GitHub, GitLab
 
-
-ISSUE_TEMPLATES = ("bug.md", "spec.md")
-
-
 class DoctorArgumentParser(argparse.ArgumentParser):
     def error(self, message: str) -> None:
         raise ActionError("doctor", message)
-
 
 def parse_args() -> argparse.Namespace:
     parser = DoctorArgumentParser(
@@ -35,7 +31,6 @@ def parse_args() -> argparse.Namespace:
     )
     add_platform_argument(parser)
     return parser.parse_args()
-
 
 def checked(item: str, inspection: Callable[[], Report]) -> Report:
     try:
@@ -45,7 +40,6 @@ def checked(item: str, inspection: Callable[[], Report]) -> Report:
     except (OSError, UnicodeError) as error:
         return Report("unknown", item, clean_detail(str(error)))
 
-
 def presence(item: str, exists: Callable[[], bool], missing: str) -> Report:
     return checked(
         item,
@@ -54,13 +48,13 @@ def presence(item: str, exists: Callable[[], bool], missing: str) -> Report:
         else Report("missing", item, missing),
     )
 
-
 def issue_template_reports(base: Path) -> list[Report]:
-    return [
-        report_file(f"issue template {name}", base / name)
-        for name in ISSUE_TEMPLATES
-    ]
-
+    if not base.is_dir():
+        return [Report("missing", "issue templates", f"{base} does not exist")]
+    names = sorted(item.name for item in base.iterdir() if item.is_file())
+    if not names:
+        return [Report("missing", "issue templates", "no template files")]
+    return [Report("OK", "issue templates", ", ".join(names))]
 
 def github_security_reports(repository: dict[str, Any]) -> list[Report]:
     security = repository.get("security_and_analysis")
@@ -79,7 +73,6 @@ def github_security_reports(repository: dict[str, Any]) -> list[Report]:
             reports.append(Report("unknown", item, f"reported {status}"))
     return reports
 
-
 def github_permission_report(repository: dict[str, Any]) -> Report:
     permissions = repository.get("permissions")
     admin = permissions.get("admin") if isinstance(permissions, dict) else None
@@ -88,7 +81,6 @@ def github_permission_report(repository: dict[str, Any]) -> Report:
     if admin is False:
         return Report("access-denied", "Admin permission", "required")
     return Report("unknown", "Admin permission", "not reported")
-
 
 def github_reports() -> list[Report]:
     github = GitHub()
@@ -145,7 +137,6 @@ def github_reports() -> list[Report]:
     )
     return reports
 
-
 def gitlab_permission_report(repository: dict[str, Any]) -> Report:
     permissions = repository.get("permissions")
     levels = []
@@ -164,7 +155,6 @@ def gitlab_permission_report(repository: dict[str, Any]) -> Report:
         "access-denied", "Maintainer permission", f"access level {level}; 40 required"
     )
 
-
 def gitlab_ci_template_report(item: str, template: str) -> Report:
     path = Path(".gitlab-ci.yml")
     if not path.is_file():
@@ -176,7 +166,6 @@ def gitlab_ci_template_report(item: str, template: str) -> Report:
     if configured:
         return Report("OK", item, "configured")
     return Report("missing", item, "not configured")
-
 
 def gitlab_reports() -> list[Report]:
     gitlab = GitLab()
@@ -215,7 +204,6 @@ def gitlab_reports() -> list[Report]:
     )
     return reports
 
-
 def unknown_platform_reports(error: ActionError) -> list[Report]:
     items = (
         "platform",
@@ -227,7 +215,6 @@ def unknown_platform_reports(error: ActionError) -> list[Report]:
         "repository permission",
     )
     return [Report("unknown", item, error.detail) for item in items]
-
 
 def print_reports(reports: list[Report]) -> None:
     for report in reports:
@@ -254,7 +241,6 @@ def print_reports(reports: list[Report]) -> None:
     else:
         print("OK: summary - all configured")
 
-
 def main() -> int:
     args = parse_args()
     try:
@@ -264,7 +250,6 @@ def main() -> int:
         reports = unknown_platform_reports(error)
     print_reports(reports)
     return 0
-
 
 if __name__ == "__main__":
     try:

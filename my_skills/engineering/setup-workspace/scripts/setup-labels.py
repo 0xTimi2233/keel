@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Create missing workflow labels and retain existing labels."""
+# 创建缺失的推荐标签，已存在的保留
+# 示例：python3 setup-labels.py [标签名...] [--platform github|gitlab]
 from __future__ import annotations
 
 import argparse
@@ -13,7 +14,6 @@ from lib import (
 )
 from providers import provider
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create missing workflow labels.")
     add_platform_argument(parser)
@@ -23,7 +23,6 @@ def parse_args() -> argparse.Namespace:
         help="Label names; defaults to the skill's recommended workflow labels.",
     )
     return parser.parse_args()
-
 
 def main() -> int:
     args = parse_args()
@@ -36,7 +35,6 @@ def main() -> int:
         service.create_label(label)
         emit("created", f"label {label}", "color 808080")
     return 0
-
 
 if __name__ == "__main__":
     run_entrypoint(main)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Shared runtime, reporting, platform detection, and file helpers."""
+# 公共设施：平台检测、CLI 运行、报告与文件安装，供各脚本共享
+# 库模块，被 doctor.py 与 setup-*.py import
 from __future__ import annotations
 
 import argparse
@@ -11,7 +12,6 @@ import shutil
 import subprocess
 from typing import Callable, NoReturn
 from urllib.parse import quote, urlsplit
-
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_LABELS = (
@@ -27,7 +27,6 @@ GITLAB_SECURITY_TEMPLATES = (
     "Jobs/Dependency-Scanning.v2.gitlab-ci.yml",
 )
 
-
 @dataclass(frozen=True)
 class CommandResult:
     args: tuple[str, ...]
@@ -35,13 +34,11 @@ class CommandResult:
     stdout: str
     stderr: str
 
-
 @dataclass(frozen=True)
 class Report:
     status: str
     item: str
     detail: str
-
 
 class ActionError(Exception):
     """An expected operational failure suitable for a one-line message."""
@@ -50,7 +47,6 @@ class ActionError(Exception):
         super().__init__(detail)
         self.item = item
         self.detail = detail
-
 
 def run_cli(
     args: list[str], *, input_text: str | None = None, timeout: int = 30
@@ -78,12 +74,10 @@ def run_cli(
     except OSError as error:
         return CommandResult(tuple(args), 126, "", clean_detail(str(error)))
 
-
 def clean_detail(text: str) -> str:
     """Collapse diagnostics to one quiet, printable line."""
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     return lines[-1] if lines else "command failed without diagnostics"
-
 
 def http_status(result: CommandResult) -> int | None:
     """Extract an HTTP status from gh/glab diagnostics."""
@@ -98,7 +92,6 @@ def http_status(result: CommandResult) -> int | None:
             return int(match.group(1))
     return None
 
-
 def command_failure(result: CommandResult) -> str:
     if result.returncode == 127:
         return result.stderr
@@ -108,12 +101,10 @@ def command_failure(result: CommandResult) -> str:
         return detail
     return f"HTTP {status}: {detail}"
 
-
 def require_success(result: CommandResult, item: str) -> CommandResult:
     if result.returncode != 0:
         raise ActionError(item, command_failure(result))
     return result
-
 
 def parse_json(text: str, item: str) -> object:
     try:
@@ -121,16 +112,13 @@ def parse_json(text: str, item: str) -> object:
     except json.JSONDecodeError as error:
         raise ActionError(item, f"invalid JSON response: {error.msg}") from error
 
-
 def failure_status(error: ActionError) -> str:
     if re.search(r"HTTP (?:401|403)\b", error.detail):
         return "access-denied"
     return "unknown"
 
-
 def emit(status: str, item: str, detail: str) -> None:
     print(f"{status}: {item} - {detail}")
-
 
 def report_file(item: str, path: Path) -> Report:
     if path.is_file():
@@ -138,7 +126,6 @@ def report_file(item: str, path: Path) -> Report:
     if path.exists():
         return Report("unknown", item, f"{path} is not a file")
     return Report("missing", item, f"{path} does not exist")
-
 
 def install_file(source: Path, destination: Path, item: str) -> str:
     """Copy an asset once; reject conflicting non-file targets."""
@@ -153,14 +140,12 @@ def install_file(source: Path, destination: Path, item: str) -> str:
         raise ActionError(item, clean_detail(str(error))) from error
     return "created"
 
-
 def add_platform_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--platform",
         choices=PLATFORMS,
         help="Override platform detection for an ambiguous remote host.",
     )
-
 
 def origin_url() -> str:
     result = run_cli(["git", "remote", "get-url", "origin"])
@@ -169,7 +154,6 @@ def origin_url() -> str:
     if not url:
         raise ActionError("platform", "origin remote URL is empty")
     return url
-
 
 def _remote_host_and_path(url: str) -> tuple[str, str]:
     if "://" in url:
@@ -188,7 +172,6 @@ def _remote_host_and_path(url: str) -> tuple[str, str]:
         return parts[0].lower(), parts[1]
     raise ActionError("platform", "could not parse origin remote; use --platform")
 
-
 def detect_platform(override: str | None = None) -> str:
     if override is not None:
         return override
@@ -201,14 +184,12 @@ def detect_platform(override: str | None = None) -> str:
         "platform", f"unsupported remote host {host or 'unknown'}; use --platform"
     )
 
-
 def gitlab_project_encoded() -> str:
     _, path = _remote_host_and_path(origin_url())
     repository = path.removesuffix(".git").strip("/")
     if "/" not in repository:
         raise ActionError("platform", "GitLab origin lacks a namespace and project")
     return quote(repository, safe="")
-
 
 def run_entrypoint(main: Callable[[], int | None]) -> NoReturn:
     """Run a mutating entrypoint with consistent, non-noisy failures."""

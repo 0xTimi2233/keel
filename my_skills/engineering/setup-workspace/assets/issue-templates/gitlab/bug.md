@@ -1,5 +1,5 @@
 ---
-title: "[缺陷] 一句话描述"
+title: "[Bug] 一句话描述"
 labels:
   - needs-triage
 ---

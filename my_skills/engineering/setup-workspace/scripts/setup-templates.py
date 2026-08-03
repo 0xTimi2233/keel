@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Install issue templates without overwriting existing files."""
+# 写入 issue 模板（assets/issue-templates 下所有文件），不覆盖已存在的
+# 示例：python3 setup-templates.py [--platform github|gitlab]
 from __future__ import annotations
 
 import argparse
@@ -15,12 +16,10 @@ from lib import (
     run_entrypoint,
 )
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Install issue templates.")
     add_platform_argument(parser)
     return parser.parse_args()
-
 
 def main() -> int:
     args = parse_args()
@@ -30,7 +29,7 @@ def main() -> int:
         if platform == "gitlab"
         else Path(".github/ISSUE_TEMPLATE")
     )
-    sources = sorted((SKILL_DIR / "assets/issue-templates").glob("*.md"))
+    sources = sorted((SKILL_DIR / "assets/issue-templates" / platform).glob("*"))
     if not sources:
         raise ActionError("issue templates", "no template assets found")
     for source in sources:
@@ -38,7 +37,6 @@ def main() -> int:
         status = install_file(source, destination / source.name, item)
         emit(status, item, "installed" if status == "created" else "unchanged")
     return 0
-
 
 if __name__ == "__main__":
     run_entrypoint(main)

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Install security CI and enable supported repository security settings."""
+# 生成 CI 与安全配置
+# GitHub：写 dependabot.yml 与 security.yml，启用 secret scanning、push protection、依赖安全更新
+# GitLab：写 .gitlab-ci.yml，include 官方 SAST 与依赖扫描模板
+# 限制：GitLab 的 include 结构复杂或重复时无法安全合并，报失败需手工合并
+# 外部依赖：dependabot.yml 配置 Dependabot 服务，维护 action SHA，语言确定后补对应生态
+# 示例：python3 setup-ci.py [--platform github|gitlab]
 from __future__ import annotations
 
 import argparse
@@ -20,7 +25,6 @@ from lib import (
 )
 from providers import GitHub
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Install security CI and enable repository security settings."
@@ -28,8 +32,8 @@ def parse_args() -> argparse.Namespace:
     add_platform_argument(parser)
     return parser.parse_args()
 
-
 def ensure_gitlab_ci() -> str:
+    # 已有 include 为列表形式时补入缺失模板；结构复杂或重复时无法安全合并，报失败需手工合并
     source = SKILL_DIR / "assets/gitlab-ci.yml"
     destination = Path(".gitlab-ci.yml")
     if not destination.exists():
@@ -92,12 +96,10 @@ def ensure_gitlab_ci() -> str:
         raise ActionError("GitLab security CI", clean_detail(str(error))) from error
     return "updated"
 
-
 def security_status(repository: dict[str, Any], feature: str) -> str | None:
     security = repository.get("security_and_analysis")
     value = security.get(feature) if isinstance(security, dict) else None
     return value.get("status") if isinstance(value, dict) else None
-
 
 def configure_github() -> None:
     github = GitHub()
@@ -134,7 +136,6 @@ def configure_github() -> None:
         github.enable_automated_security_fixes()
         emit("created", "dependency security updates", "enabled")
 
-
 def main() -> int:
     args = parse_args()
     if detect_platform(args.platform) == "gitlab":
@@ -144,7 +145,6 @@ def main() -> int:
     else:
         configure_github()
     return 0
-
 
 if __name__ == "__main__":
     run_entrypoint(main)

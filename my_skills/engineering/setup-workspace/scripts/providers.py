@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""GitHub and GitLab API adapters used by all workspace scripts."""
+# GitHub / GitLab API 适配器：标签、分支保护、安全设置
+# 库模块，被 doctor.py 与 setup-*.py import
 from __future__ import annotations
 
 import json
@@ -16,7 +17,6 @@ from lib import (
     require_success,
     run_cli,
 )
-
 
 class GitHub:
     repository_endpoint = "repos/{owner}/{repo}"
@@ -117,7 +117,6 @@ class GitHub:
             "dependency security updates",
         )
 
-
 class GitLab:
     def __init__(self) -> None:
         self.project = gitlab_project_encoded()
@@ -187,7 +186,6 @@ class GitLab:
             ),
             "main branch protection",
         )
-
 
 def provider(platform: str) -> GitHub | GitLab:
     return GitLab() if platform == "gitlab" else GitHub()
