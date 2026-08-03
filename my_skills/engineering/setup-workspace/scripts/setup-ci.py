@@ -30,6 +30,11 @@ def parse_args() -> argparse.Namespace:
         description="Install security CI and enable repository security settings."
     )
     add_platform_argument(parser)
+    parser.add_argument(
+        "--paid",
+        action="store_true",
+        help="Enable paid security features on private repositories.",
+    )
     return parser.parse_args()
 
 def ensure_gitlab_ci() -> str:
@@ -101,7 +106,7 @@ def security_status(repository: dict[str, Any], feature: str) -> str | None:
     value = security.get(feature) if isinstance(security, dict) else None
     return value.get("status") if isinstance(value, dict) else None
 
-def configure_github() -> None:
+def configure_github(paid: bool) -> None:
     github = GitHub()
     files = (
         (
@@ -121,11 +126,13 @@ def configure_github() -> None:
 
     repository = github.repository()
     if repository.get("visibility") != "public":
-        emit("skipped", "secret scanning", "requires paid plan on private repositories")
-        emit("skipped", "secret scanning push protection", "requires paid plan on private repositories")
-        emit("skipped", "dependency graph", "requires paid plan on private repositories")
-        emit("skipped", "dependency security updates", "requires paid plan on private repositories")
-        return
+        if not paid:
+            emit("skipped", "secret scanning", "requires paid plan on private repositories")
+            emit("skipped", "secret scanning push protection", "requires paid plan on private repositories")
+            emit("skipped", "dependency graph", "requires paid plan on private repositories")
+            emit("skipped", "dependency security updates", "requires paid plan on private repositories")
+            return
+        emit("paid", "security features", "enabled on private repository")
 
     if github.vulnerability_alerts_enabled():
         emit("exists", "dependency graph", "enabled")
@@ -156,7 +163,7 @@ def main() -> int:
         detail = "security templates configured" if status != "exists" else "unchanged"
         emit(status, "GitLab security CI", detail)
     else:
-        configure_github()
+        configure_github(args.paid)
     return 0
 
 if __name__ == "__main__":
