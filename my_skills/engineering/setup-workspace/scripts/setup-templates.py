@@ -29,7 +29,7 @@ def main() -> int:
         if platform == "gitlab"
         else Path(".github/ISSUE_TEMPLATE")
     )
-    sources = sorted((SKILL_DIR / "assets/issue-templates" / platform).glob("*"))
+    sources = sorted((SKILL_DIR / "assets" / platform / "issue-templates").glob("*"))
     if not sources:
         raise ActionError("issue templates", "no template assets found")
     for source in sources:
