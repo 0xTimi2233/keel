@@ -1,6 +1,5 @@
 name: Bug report
 description: 报告一个缺陷，帮助定位与修复
-title: "[Bug] "
 labels:
   - type:bug
   - stage:needs-triage
@@ -32,9 +31,11 @@ body:
       placeholder: 结果……
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: environment
     attributes:
       label: 环境
-      description: 浏览器、系统、版本、部署环境
-      placeholder: 例如 Chrome 120 / macOS 14
+      description: 填写操作系统与应用版本，不适用可留空
+      value: |
+        - macOS Version: [e.g. 26.4.1]
+        - App Version: [e.g. 1.2.3]

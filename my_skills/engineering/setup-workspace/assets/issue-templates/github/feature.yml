@@ -1,6 +1,5 @@
 name: Feature request
 description: 提出一个功能请求
-title: "[Feature] "
 labels:
   - type:feature
   - stage:needs-triage

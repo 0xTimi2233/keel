@@ -56,12 +56,12 @@ class GitHub:
             return False
         raise ActionError(f"label {name}", command_failure(result))
 
-    def create_label(self, name: str) -> None:
+    def create_label(self, name: str, color: str = "808080") -> None:
         require_success(
             self.api(
                 f"{self.repository_endpoint}/labels",
                 method="POST",
-                payload={"name": name, "color": "808080"},
+                payload={"name": name, "color": color},
             ),
             f"label {name}",
         )
@@ -155,12 +155,12 @@ class GitLab:
             return False
         raise ActionError(f"label {name}", command_failure(result))
 
-    def create_label(self, name: str) -> None:
+    def create_label(self, name: str, color: str = "808080") -> None:
         require_success(
             self.api(
                 f"{self.repository_endpoint}/labels",
                 method="POST",
-                fields=(f"name={name}", "color=#808080"),
+                fields=(f"name={name}", f"color=#{color}"),
             ),
             f"label {name}",
         )
