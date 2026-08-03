@@ -13,14 +13,20 @@ from providers import provider
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Protect the main branch.")
     add_platform_argument(parser)
+    parser.add_argument(
+        "--approval",
+        type=int,
+        default=0,
+        help="Required PR approvals; 0 for single-person, 1+ for teams.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     service = provider(detect_platform(args.platform))
-    service.protect_main()
-    emit("created", "main branch protection", "configured")
+    service.protect_main(args.approval)
+    emit("created", "main branch protection", f"configured ({args.approval} approval)")
     return 0
 
 

@@ -94,12 +94,12 @@ class GitHub:
             "dependency graph",
         )
 
-    def protect_main(self) -> None:
+    def protect_main(self, approval: int = 0) -> None:
         payload = {
             "required_status_checks": {"strict": True, "contexts": []},
             "enforce_admins": True,
             "required_pull_request_reviews": {
-                "required_approving_review_count": 0,
+                "required_approving_review_count": approval,
                 "dismiss_stale_reviews": True,
             },
             "restrictions": None,
@@ -197,7 +197,8 @@ class GitLab:
             return False
         raise ActionError("main branch protection", command_failure(result))
 
-    def protect_main(self) -> None:
+    def protect_main(self, approval: int = 0) -> None:
+        # approval 仅 GitHub 生效；GitLab 的批准规则不在此配置
         require_success(
             self.api(
                 f"{self.repository_endpoint}/protected_branches",
