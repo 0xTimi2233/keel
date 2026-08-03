@@ -2,6 +2,7 @@ name: Bug report
 description: 报告一个缺陷，帮助定位与修复
 title: "[Bug] "
 labels:
+  - bug
   - needs-triage
 body:
   - type: textarea

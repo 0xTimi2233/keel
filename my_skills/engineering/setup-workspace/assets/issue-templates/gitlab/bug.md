@@ -1,6 +1,7 @@
 ---
 title: "[Bug] 一句话描述"
 labels:
+  - bug
   - needs-triage
 ---
 

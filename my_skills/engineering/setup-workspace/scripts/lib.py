@@ -20,6 +20,11 @@ DEFAULT_LABELS = (
     "ready-for-agent",
     "ready-for-human",
     "wontfix",
+    "bug",
+    "enhancement",
+    "P1",
+    "P2",
+    "P3",
 )
 PLATFORMS = ("github", "gitlab")
 GITLAB_SECURITY_TEMPLATES = (

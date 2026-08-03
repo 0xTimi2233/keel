@@ -1,6 +1,7 @@
 ---
 title: "[Feature] 一句话描述"
 labels:
+  - enhancement
   - needs-triage
 ---
 
