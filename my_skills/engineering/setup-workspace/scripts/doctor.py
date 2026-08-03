@@ -82,22 +82,29 @@ def github_permission_report(repository: dict[str, Any]) -> Report:
         return Report("access-denied", "Admin permission", "required")
     return Report("unknown", "Admin permission", "not reported")
 
+def label_reports(exists: Callable[[str], bool]) -> list[Report]:
+    missing = [label for label in LABELS if not exists(label)]
+    if missing:
+        return [Report("missing", "labels", ", ".join(missing))]
+    return [Report("OK", "labels", ", ".join(LABELS))]
+
+
 def github_reports() -> list[Report]:
     github = GitHub()
     reports = [Report("OK", "platform", "github")]
-    for label in LABELS:
-        reports.append(
-            presence(
-                f"label {label}",
-                lambda label=label: github.label_exists(label),
-                "does not exist",
-            )
-        )
+    reports.extend(label_reports(github.label_exists))
     reports.append(
         presence(
             "main branch protection",
             github.main_is_protected,
             "not configured",
+        )
+    )
+    reports.append(
+        presence(
+            "dependency graph",
+            github.vulnerability_alerts_enabled,
+            "not enabled",
         )
     )
     reports.extend(issue_template_reports(Path(".github/ISSUE_TEMPLATE")))
@@ -172,14 +179,7 @@ def gitlab_reports() -> list[Report]:
     reports = [
         Report("OK", "platform", f"gitlab ({unquote(gitlab.project)})")
     ]
-    for label in LABELS:
-        reports.append(
-            presence(
-                f"label {label}",
-                lambda label=label: gitlab.label_exists(label),
-                "does not exist",
-            )
-        )
+    reports.extend(label_reports(gitlab.label_exists))
     reports.append(
         presence(
             "main branch protection",
@@ -209,6 +209,7 @@ def unknown_platform_reports(error: ActionError) -> list[Report]:
         "platform",
         "labels",
         "main branch protection",
+        "dependency graph",
         "issue templates",
         "CI configuration",
         "security settings",

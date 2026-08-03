@@ -78,6 +78,22 @@ class GitHub:
             return False
         raise ActionError("main branch protection", command_failure(result))
 
+    def vulnerability_alerts_enabled(self) -> bool:
+        result = self.api(f"{self.repository_endpoint}/vulnerability-alerts")
+        if result.returncode == 0:
+            return True
+        if http_status(result) == 404:
+            return False
+        raise ActionError("dependency graph", command_failure(result))
+
+    def enable_vulnerability_alerts(self) -> None:
+        require_success(
+            self.api(
+                f"{self.repository_endpoint}/vulnerability-alerts", method="PUT"
+            ),
+            "dependency graph",
+        )
+
     def protect_main(self) -> None:
         payload = {
             "required_status_checks": {"strict": True, "contexts": []},

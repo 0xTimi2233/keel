@@ -34,7 +34,7 @@ def parse_args() -> argparse.Namespace:
 
 def ensure_gitlab_ci() -> str:
     # 已有 include 为列表形式时补入缺失模板；结构复杂或重复时无法安全合并，报失败需手工合并
-    source = SKILL_DIR / "assets/gitlab-ci.yml"
+    source = SKILL_DIR / "assets/gitlab/gitlab-ci.yml"
     destination = Path(".gitlab-ci.yml")
     if not destination.exists():
         return install_file(source, destination, "GitLab security CI")
@@ -106,18 +106,24 @@ def configure_github() -> None:
     files = (
         (
             "Dependabot configuration",
-            SKILL_DIR / "assets/dependabot.yml",
+            SKILL_DIR / "assets/github/dependabot.yml",
             Path(".github/dependabot.yml"),
         ),
         (
             "security workflow",
-            SKILL_DIR / "assets/workflows/security.yml",
+            SKILL_DIR / "assets/github/workflows/security.yml",
             Path(".github/workflows/security.yml"),
         ),
     )
     for item, source, destination in files:
         status = install_file(source, destination, item)
         emit(status, item, "installed" if status == "created" else "unchanged")
+
+    if github.vulnerability_alerts_enabled():
+        emit("exists", "dependency graph", "enabled")
+    else:
+        github.enable_vulnerability_alerts()
+        emit("created", "dependency graph", "enabled")
 
     repository = github.repository()
     for feature, item in (

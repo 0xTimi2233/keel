@@ -8,7 +8,9 @@ description: 配置仓库的工程基础设施；当用户需要初始化时使�
 ## 流程
 
 1. **探测**：运行 `./scripts/doctor.py`，输出平台、推荐标签、分支保护、issue 模板、CI、安全、权限的现状；同时检查当前分支与远端历史
-2. **报告**：向用户汇总缺失项与执行计划，包括推送方式与内容：已有项目时走 PR 推送配置文件；远端无 main 时建立 main 并推送本地全部历史
+2. **报告**：向用户汇总缺失项与执行计划
+   - 将配置的 Action 及作用，见 [security.yml](./assets/github/workflows/security.yml)
+   - 推送：已有项目走 PR；远端无 main 时建立 main 推全部历史
 3. **执行**：用户确认后按序运行：
    - `./scripts/setup-labels.py [label...]`：创建标签，默认定义见 [labels.json](./references/labels.json)，可传自定义标签名
    - `./scripts/setup-templates.py`：写入 issue 模板
